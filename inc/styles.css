@@ -1,0 +1,98 @@
+#calendar_message{
+	padding:10px;
+	border:1px solid #aaa;
+}
+#calendar.clickable td{
+	cursor:pointer;
+}
+#calendar.removable tr td.b,
+#calendar.removable tr td.arrival-b,
+#calendar.removable tr td.departure-b,
+#calendar.removable tr td.r,
+#calendar.removable tr td.arrival-r,
+#calendar.removable tr td.departure-r{
+	cursor:pointer;
+}
+#calendar tr{
+	padding:0;
+	margin:0;
+}
+#calendar tr td{
+	width:15px;
+	height:15px;
+	padding:0;
+	margin:0;
+	text-align:center;
+	color:#fff;
+}
+#calendar tr td.month_name{
+	padding-right:10px;
+	text-align:right;
+	color:#000;
+}
+#calendar tr.day_names td{
+	color:#000;
+}
+#calendar tr td.f{
+	background:#0c0;
+}
+#calendar tr td.b{
+	cursor:default;
+	background:#f00;
+}
+#calendar tr td.arrival-b{
+	background:#0c0 url(../modules/JSAvailability/icons/icon_gruen_rot.png) 0 0 no-repeat;
+}
+#calendar tr td.departure-b{
+	background:#0c0 url(../modules/JSAvailability/icons/icon_rot_gruen.png) 0 0 no-repeat;
+}	
+#calendar tr td.arrival-b.departure-b{
+	background:url(../modules/JSAvailability/icons/icon_rot_rot.png) 0  no-repeat;
+}
+#calendar tr td.r{
+	cursor:default;
+	background:#ff0;
+}
+#calendar tr td.arrival-r{
+	background:#0c0 url(../modules/JSAvailability/icons/icon_gruen_gelb.png) no-repeat;
+}
+#calendar tr td.departure-r{
+	background:#0c0 url(../modules/JSAvailability/icons/icon_gelb_gruen.png) no-repeat;
+}
+#calendar tr.append_start td.departure-b,
+#calendar tr.append_end td.departure-b,
+#calendar tr.append_start td.arrival-b,
+#calendar tr.append_end td.arrival-b,
+#calendar tr.append_start td.departure-r,
+#calendar tr.append_end td.departure-r,
+#calendar tr.append_start td.arrival-r,
+#calendar tr.append_end td.arrival-r{
+	background-color:#bbb;
+}
+#calendar tr td.arrival-r.departure-b,
+#calendar tr td.arrival-b.departure-r{
+	background:url(../modules/JSAvailability/icons/icon_gelb_rot.png);
+}
+#calendar tr.append_start td.f,
+#calendar tr.append_end td.f{
+	background:#bbb;
+}
+#calendar tr.separator td{
+	height:15px;
+}
+
+td.control-1,
+td.control-2{
+	text-transform:uppercase;
+	background:#ccc;
+	padding:5px;
+	cursor:pointer;
+}
+td.control-1:hover,
+td.control-2:hover{
+	background:#bbb;
+}
+td.control-1.active,
+td.control-2.active{
+	background:#999;
+}
