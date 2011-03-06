@@ -1,19 +1,21 @@
 <link rel="stylesheet" type="text/css" href="{$incdir}styles.css" />
-<h1>{$year}</h1>
-<table id="calendar">
+<p>{$selectyearlabel}: {$selectyear}</p>
+<table>
 	<tr class="day_names">
 		<td>&nbsp;</td>
 	{section name="day" start=1 loop=32}
 		<td>{$smarty.section.day.index}</td>
 	{/section}
 	</tr>
-	{section name="month" start=1 loop=13}
-		<tr>
-		{section name="day" loop=$years[$year][$smarty.section.month.index].length+1}
+	{section name="month" start=1 loop=$append_before+$append_after+13}
+	{assign var="month" value=$smarty.section.month.index}
+		<tr{if $month <= $append_before} class="append_before"{elseif $month > $append_before+12} class="append_after"{/if}>
+	{if $month <= $append_before}{assign var="month" value=$month+12-$append_before}{elseif $month > $append_before+12}{assign var="month" value=$month-12-$append_before}{else}{assign var="month" value=$month-$append_before}{/if}
+		{section name="day" loop=$years[$year][$month].length+1}
 			{if $smarty.section.day.index == 0}
-			<td class="month_name">{$timestamps[$smarty.section.month.index]|date_format:"%B"|escape:"htmlall"}</td>
+			<td class="month_name">{$timestamps[$month]|date_format:"%B"|escape:"htmlall"}</td>
 			{else}
-			<td class="f">{if $years[$year][$smarty.section.month.index].sundays[$smarty.section.day.index]}{$sundayabbrlabel}{/if}</td>
+			<td class="f{if $smarty.section.day.index % 2 == 0} odd{/if}">{if $years[$year][$month].sundays[$smarty.section.day.index]}{$sundayabbrlabel}{/if}</td>
 			{/if}
 		{/section}
 		</tr>

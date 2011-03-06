@@ -10,10 +10,12 @@ $lang['help'] = 'Keine Hilfe hinterlegt.';
 $lang['changelog'] = '';
 $lang['moddescription'] = 'Gibt die Möglichkeit, einen Belegungsplan über das CMS zu erstellen und zu bearbeiten und diesen im Frontend auszugeben.';
 
-$lang['calendar-view'] = "Kalender Ansicht";
+$lang['calendar-view'] = 'Kalender Ansicht';
+$lang['selectyear'] = 'Jahr anzeigen';
 
 $lang['preferences'] = 'Einstellungen';
-$lang['append_months'] = 'Monate anh&auml;ngen';
+$lang['append_months_before'] = 'Monate vorne anf&uuml;gen';
+$lang['append_months_after'] = 'Monate hinten anf&uuml;gen';
 $lang['submit'] = 'Absenden';
 $lang['cancel'] = 'Abbrechen';
 $lang['preferencessaved'] = 'Einstellungen gespeichert.';

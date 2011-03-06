@@ -98,5 +98,12 @@ class JSAvailability extends CMSModule
 		}
 		return $this->timestamps;
 	}
+	function createYearDropdown(){
+		$year = date('Y');
+		$years = array();
+		for($n = -1; $n <= 5; $n++)
+			$years[$year+$n] = $year+$n;
+		return $years;
+	}
 }
 ?>
