@@ -7,6 +7,7 @@ $config = cmsms()->GetConfig();
 // config
 $append_start = $this->GetPreference('append_months_before', 2);;
 $append_end = $this->GetPreference('append_months_after', 2);
+$current_year = $this->GetPreference('current_year', date('Y'));
 
 // Load entries
 $entryarray = array();
@@ -18,20 +19,24 @@ while ($dbresult && $row = $dbresult->FetchRow())
 	$guests[str_replace('-', '', $row['start'])] = array('end' => str_replace('-', '', $row['end']), 'type' => $row['type']);
 $smarty->assign('guests', $guests);
 
-$years[date('Y')-1] = $this->getYearInfo(date('Y')-1);
-$years[date('Y')] = $this->getYearInfo(date('Y'));
-$years[date('Y')+1] = $this->getYearInfo(date('Y')+1);
+$years[$current_year-1] = $this->getYearInfo($current_year-1);
+$years[$current_year] = $this->getYearInfo($current_year);
+$years[$current_year+1] = $this->getYearInfo($current_year+1);
 $smarty->assign('years', $years);
 $smarty->assign('timestamps', $this->getMonthTimestamps());
 
+$smarty->assign('admindir', $config['root_url'].'/'.$config['admin_dir']);
 $smarty->assign('incdir', $config['root_url'].'/modules/JSAvailability/inc/');
-$smarty->assign('year', date('Y'));
+$smarty->assign('userkey', $_SESSION[CMS_USER_KEY]);
+$smarty->assign('formid', $id);
+
+$smarty->assign('year', $current_year);
 $smarty->assign('sundayabbrlabel', substr(date('D', 1298761200), 0, 1));
 $smarty->assign('sundaylabel', date('l', 1298761200));
 $smarty->assign('append_before', $this->GetPreference('append_months_before', 2));
 $smarty->assign('append_after', $this->GetPreference('append_months_after', 2));
 $smarty->assign('selectyearlabel', $this->Lang('selectyear'));
-$smarty->assign('selectyear', $this->CreateInputDropdown($id, 'y', $this->createYearDropdown(), (string)date('Y')));
+$smarty->assign('selectyear', $this->CreateInputDropdown($id, 'y', $this->createYearDropdown(), -1, (string)$current_year, 'id="'.$id.'y"'));
 
 /*$year = date("Y");
 $smarty->assign('year', $year);

@@ -1,3 +1,11 @@
+<script type="text/javascript">
+<!--
+var CMS_ADMIN_DIR = '{$admindir}';
+var CMS_USER_KEY = '{$userkey}';
+var CMS_FORM_ID = '{$formid}';
+-->
+</script>
+<script type="text/javascript" src="{$incdir}availability.js"></script>
 <link rel="stylesheet" type="text/css" href="{$incdir}styles.css" />
 <p>{$selectyearlabel}: {$selectyear}</p>
 <table>

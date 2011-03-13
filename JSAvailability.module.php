@@ -105,5 +105,11 @@ class JSAvailability extends CMSModule
 			$years[$year+$n] = $year+$n;
 		return $years;
 	}
+	function setCurrentYear($year){
+		if(!preg_match('#^[0-9]{4}$#', $year))
+			return false;
+		$this->SetPreference('current_year', $year);
+		return $year;
+	}
 }
 ?>
