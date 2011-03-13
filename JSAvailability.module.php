@@ -4,7 +4,12 @@
  *
  * @author Jonathan Schmid
  * @modifiedby $LastChangedBy: foaly* $
- * @lastmodified $Date: 2011-03-15 15:30 +0200 $
+ * @lastmodified $Date: 2011-03-13 22:42 +0200 $
+ * TODO:
+ * - check td id of append months
+ * - save period
+ * - reload? -> wrapper div
+ * - icons
  * @license GPL
  **/
 class JSAvailability extends CMSModule
@@ -15,6 +20,8 @@ class JSAvailability extends CMSModule
 	function JSAvailability(){
 		parent::CMSModule();
 		setlocale(LC_ALL, cmsms()->siteprefs['frontendlang']);
+		$smarty =& cmsms()->GetSmarty();
+		$smarty->register_modifier('js_str_pad', array($this, 'smarty_modifier_str_pad'));
 	}
 	function GetName(){
 		return 'JSAvailability';
@@ -109,7 +116,25 @@ class JSAvailability extends CMSModule
 		if(!preg_match('#^[0-9]{4}$#', $year))
 			return false;
 		$this->SetPreference('current_year', $year);
-		return $year;
+		return true;
+	}
+	function postPeriod($arrival, $departure){
+		$arrival = strtotime($arrival);
+		$departure = strtotime($departure);
+		if(!$arrival || !$departure || $departure <= $arrival)
+			return $this->Lang('wrongdateformat');
+
+		$db =& cmsms()->GetDb();
+		$query = 'SELECT id FROM `'.cms_db_prefix().'module_jsavailability` WHERE UNIX_TIMESTAMP(arrival) > ? AND UNIX_TIMESTAMP(arrival) < ?';
+		$dbresult = $db->Execute($query, array($arrival, $departure));
+		if($dbresult->NumRows() > 0)
+			return $this->Lang('overlap');
+		return 'ok';
+	}
+	function smarty_modifier_str_pad($string, $length, $pad_string='', $pad_type='left'){
+		$pads = array('left'=>STR_PAD_LEFT, 'right'=>STR_PAD_RIGHT, 'both'=>STR_PAD_BOTH);
+		if(array_key_exists($pad_type, $pads))
+			return str_pad($string, $length ,$pad_string,$pads[$pad_type]);
 	}
 }
 ?>

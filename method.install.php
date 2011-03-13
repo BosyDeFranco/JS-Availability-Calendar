@@ -6,7 +6,7 @@ $taboptarray = array( 'mysql' => 'TYPE=MyISAM' );
 $dict = NewDataDictionary( $db );
 			
 $sqlarray = $dict->CreateTableSQL( cms_db_prefix()."module_jsavailability",
-					"id I AUTO KEY, type I, start D, end D",
+					"id I AUTO KEY, type I, arrival TS, departure TS",
 				   $taboptarray);
 $dict->ExecuteSQLArray($sqlarray);
 

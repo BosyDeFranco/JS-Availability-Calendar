@@ -23,7 +23,7 @@ var CMS_FORM_ID = '{$formid}';
 			{if $smarty.section.day.index == 0}
 			<td class="month_name">{$timestamps[$month]|date_format:"%B"|escape:"htmlall"}</td>
 			{else}
-			<td class="f{if $smarty.section.day.index % 2 == 0} odd{/if}">{if $years[$year][$month].sundays[$smarty.section.day.index]}{$sundayabbrlabel}{/if}</td>
+			<td class="f{if $smarty.section.day.index % 2 == 0} odd{/if}" id="{$year}-{$month|js_str_pad:2:'0':'left'}-{$smarty.section.day.index|js_str_pad:2:'0':'left'}">{if $years[$year][$month].sundays[$smarty.section.day.index]}{$sundayabbrlabel}{/if}</td>
 			{/if}
 		{/section}
 		</tr>

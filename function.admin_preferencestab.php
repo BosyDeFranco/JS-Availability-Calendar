@@ -8,10 +8,10 @@ $this->smarty->assign('endform', $this->CreateFormEnd());
 $fields = array();
 
 $fields[0]['text'] = $this->Lang('append_months_before');
-$fields[0]['input'] = $this->CreateInputDropdown($id, 'append_months_before', range(0, 12), $this->GetPreference('append_months_before', 0));
+$fields[0]['input'] = $this->CreateInputDropdown($id, 'append_months_before', range(0, 12), $this->GetPreference('append_months_before', 2));
 
 $fields[1]['text'] = $this->Lang('append_months_after');
-$fields[1]['input'] = $this->CreateInputDropdown($id, 'append_months_after', range(0, 12), $this->GetPreference('append_months_after', 0));
+$fields[1]['input'] = $this->CreateInputDropdown($id, 'append_months_after', range(0, 12), $this->GetPreference('append_months_after', 2));
 
 $this->smarty->assign('fields', $fields);
 

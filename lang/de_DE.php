@@ -12,6 +12,8 @@ $lang['moddescription'] = 'Gibt die Möglichkeit, einen Belegungsplan über das CM
 
 $lang['calendar-view'] = 'Kalender Ansicht';
 $lang['selectyear'] = 'Jahr anzeigen';
+$lang['wrongdateformat'] = 'Fehler: Falsches Datumsformat!';
+$lang['overlap'] = '&Uuml;berlappende Eintr&auml;ge nicht m&ouml;glich.';
 
 $lang['preferences'] = 'Einstellungen';
 $lang['append_months_before'] = 'Monate vorne anf&uuml;gen';

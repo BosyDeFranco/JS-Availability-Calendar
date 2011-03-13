@@ -9,6 +9,12 @@ function ajax_function(usr_function, params){
 			m1_usr_function: usr_function,
 			showtemplate: false,
 			m1_params: params
+		},
+		function(data){
+			if(data != ''){
+				var message = $('<div class="pagemcontainer"><p class="pagemessage">' + data + '</p></div>').prependTo('#calendar-view_c');
+				window.setTimeout(function(){ message.hide(); }, 9000);
+			}
 		}
 	);
 }
@@ -31,22 +37,49 @@ function initYearSwitch(){
    });
 }
 function initCalendar(){
+	var _t = $('#calendar-view_c').find('table').eq(0);
 	var mode_action = '';
 	var mode_status = 'booking';
-	var _t = $('#calendar-view_c').find('table').eq(0);
+	var arrival = '';
+	var departure = '';
 
 	// Table
+	function postPeriod(){
+		ajax_function('postPeriod', arrival+','+departure);
+		arrival = '';
+		departure = '';
+		//ajax_tab('calendartab', '#calendar-view_c');
+	}
 	$('td', _t).each(function(){
 		$(this).click(function(){
+			var a = $(this);
 			if(mode_action == '')
 				return;
 
-			if(mode_action == 'arrival' && $(this).hasClass('f'))
-				alert('frei');
+			if(a.hasClass('f')){
+				switch(mode_action){
+					case 'arrival':
+						arrival = a.attr('id');
+						changeModeAction('departure');
+						break;
+					case 'departure':
+						if(a.attr('id').replace(/-/g, '') <= arrival.replace(/-/g, ''))
+							return;
+						departure = a.attr('id');
+						postPeriod();
+						clearModeAction();
+						break;
+				}
+			}
 		});
 	 });
 
 	// Controls
+	function clearModeAction(){
+		mode_action = '';
+		$('.control-1').removeClass('active');
+		_t.removeClass('clickable');
+	}
 	function changeModeAction(mode){
 		mode_action = mode;
 		$('.control-1').removeClass('active');
