@@ -31,8 +31,8 @@ $smarty->assign('userkey', $_SESSION[CMS_USER_KEY]);
 $smarty->assign('formid', $id);
 
 $smarty->assign('year', $current_year);
-$smarty->assign('sundayabbrlabel', substr(date('D', 1298761200), 0, 1));
-$smarty->assign('sundaylabel', date('l', 1298761200));
+$smarty->assign('sundayabbrlabel', substr(strftime('%a', 1298761200), 0, 1));
+$smarty->assign('sundaylabel', strftime('%A', 1298761200));
 $smarty->assign('append_before', $this->GetPreference('append_months_before', 2));
 $smarty->assign('append_after', $this->GetPreference('append_months_after', 2));
 $smarty->assign('selectyearlabel', $this->Lang('selectyear'));

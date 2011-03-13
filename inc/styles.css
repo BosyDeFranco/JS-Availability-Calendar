@@ -1,18 +1,3 @@
-#calendar-view_c_message{
-	padding:10px;
-	border:1px solid #aaa;
-}
-#calendar-view_c.clickable td{
-	cursor:pointer;
-}
-#calendar-view_c.removable tr td.b,
-#calendar-view_c.removable tr td.arrival-b,
-#calendar-view_c.removable tr td.departure-b,
-#calendar-view_c.removable tr td.r,
-#calendar-view_c.removable tr td.arrival-r,
-#calendar-view_c.removable tr td.departure-r{
-	cursor:pointer;
-}
 #calendar-view_c tr{
 	padding:0;
 	margin:0;
@@ -40,59 +25,19 @@
 #calendar-view_c .f{
 	background:#0c0;
 }
+#calendar-view_c .clickable .f{
+	cursor:pointer;
+}
 #calendar-view_c .f.odd{
 	background:#0b0;
 }
-#calendar-view_c .b{
-	cursor:default;
-	background:#f00;
-}
-#calendar-view_c tr td.arrival-b{
-	background:#0c0 url(../modules/JSAvailability/icons/icon_gruen_rot.png) 0 0 no-repeat;
-}
-#calendar-view_c tr td.departure-b{
-	background:#0c0 url(../modules/JSAvailability/icons/icon_rot_gruen.png) 0 0 no-repeat;
-}	
-#calendar-view_c tr td.arrival-b.departure-b{
-	background:url(../modules/JSAvailability/icons/icon_rot_rot.png) 0  no-repeat;
-}
-#calendar-view_c tr td.r{
-	cursor:default;
-	background:#ff0;
-}
-#calendar-view_c tr td.arrival-r{
-	background:#0c0 url(../modules/JSAvailability/icons/icon_gruen_gelb.png) no-repeat;
-}
-#calendar-view_c tr td.departure-r{
-	background:#0c0 url(../modules/JSAvailability/icons/icon_gelb_gruen.png) no-repeat;
-}
-#calendar-view_c tr.append_before td.departure-b,
-#calendar-view_c tr.append_after td.departure-b,
-#calendar-view_c tr.append_before td.arrival-b,
-#calendar-view_c tr.append_after td.arrival-b,
-#calendar-view_c tr.append_before td.departure-r,
-#calendar-view_c tr.append_after td.departure-r,
-#calendar-view_c tr.append_before td.arrival-r,
-#calendar-view_c tr.append_after td.arrival-r{
-	background-color:#bbb;
-}
-#calendar-view_c tr td.arrival-r.departure-b,
-#calendar-view_c tr td.arrival-b.departure-r{
-	background:url(../modules/JSAvailability/icons/icon_gelb_rot.png);
-}
-#calendar-view_c .append_before td.f,
-#calendar-view_c .append_after td.f{
+#calendar-view_c .append_before .f,
+#calendar-view_c .append_after .f{
 	background:#bbb;
 }
 #calendar-view_c .append_before .odd.f,
 #calendar-view_c .append_after .odd.f{
 	background:#aaa;
-}
-#calendar-view_c .separator td{
-	height:15px;
-}
-#calendar-view_c .separator-2{
-	width:20px;
 }
 #calendar-view_c .control-1,
 #calendar-view_c .control-2{
@@ -106,6 +51,9 @@
 	border-radius: 5px 5px 5px 5px;
 	border: 1px solid #999;
 	color:#000;
+}
+#calendar-view_c #departure-ctrl{
+	cursor:default;
 }
 #calendar-view_c .control-1:hover,
 #calendar-view_c .control-2:hover{
