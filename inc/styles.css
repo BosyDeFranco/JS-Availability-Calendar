@@ -68,13 +68,29 @@
 	background:url(../icons/icon_yellow-green.png) 0 0 no-repeat;
 }
 #calendar-view_c .arrival.departure.booking{
-	background:url(../icons/icon_red-red.png) 0 0 no-repeat;
+	background:url(../icons/icon_red.png) 0 0 no-repeat;
 }
 #calendar-view_c .arrival.departure.reservation{
-	background:url(../icons/icon_yellow-yellow.png) 0 0 no-repeat;
+	background:url(../icons/icon_yellow.png) 0 0 no-repeat;
 }
 #calendar-view_c .arrival.departure.reservation.booking{
 	background:url(../icons/icon_yellow-red.png) 0 0 no-repeat;
+}
+#calendar-view_c .append_before .arrival.booking,
+#calendar-view_c .append_after .arrival.booking{
+	background:url(../icons/icon_grey-red.png) 0 0 no-repeat;
+}
+#calendar-view_c .append_before .arrival.reservation,
+#calendar-view_c .append_after .arrival.reservation{
+	background:url(../icons/icon_grey-yellow.png) 0 0 no-repeat;
+}
+#calendar-view_c .append_before .departure.booking,
+#calendar-view_c .append_after .departure.booking{
+	background:url(../icons/icon_red-grey.png) 0 0 no-repeat;
+}
+#calendar-view_c .append_before .departure.reservation,
+#calendar-view_c .append_after .departure.reservation{
+	background:url(../icons/icon_yellow-grey.png) 0 0 no-repeat;
 }
 #calendar-view_c .control-1,
 #calendar-view_c .control-2{
