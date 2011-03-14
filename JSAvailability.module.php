@@ -6,10 +6,10 @@
  * @modifiedby $LastChangedBy: foaly* $
  * @lastmodified $Date: 2011-03-13 22:42 +0200 $
  * TODO:
- * - correct year for append months !!
  * - icons
  * - loading hint
  * - proof overlap check
+ * - correct cursors
  * @license GPL
  **/
 class JSAvailability extends CMSModule

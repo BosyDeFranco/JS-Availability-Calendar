@@ -12,6 +12,8 @@
 	margin:0;
 	text-align:center;
 	color:#fff;
+	background-position:0 0;
+	background-repeat:no-repeat;
 }
 #calendar-view_c .month_name{
 	padding-right:10px;
@@ -25,72 +27,95 @@
 #calendar-view_c .day_names td{
 	color:#000;
 }
-#calendar-view_c .f{
-	background:#0c0;
-}
 #calendar-view_c .clickable .departure,
 #calendar-view_c .clickable .f{
 	cursor:pointer;
 }
-#calendar-view_c .f.odd{
-	background:#0b0;
+#calendar-view_c .f,
+#calendar-view_c .arrival.booking,
+#calendar-view_c .arrival.reservation,
+#calendar-view_c .departure.booking,
+#calendar-view_c .departure.reservation{
+	background:#0c0;
+}
+#calendar-view_c .f.odd,
+#calendar-view_c .arrival.booking.odd,
+#calendar-view_c .arrival.reservation.odd,
+#calendar-view_c .departure.booking.odd,
+#calendar-view_c .departure.reservation.odd{
+	background-color:#0b0;
 }
 #calendar-view_c .append_before .f,
-#calendar-view_c .append_after .f{
-	background:#bbb;
-}
-#calendar-view_c .append_before .odd.f,
-#calendar-view_c .append_after .odd.f{
-	background:#aaa;
-}
-#calendar-view_c .booking{
-	background:#f00;
-}
-#calendar-view_c .booking.odd{
-	background:#e00;
-}
-#calendar-view_c .reservation{
-	background:#ff0;
-}
-#calendar-view_c .reservation.odd{
-	background:#ee0;
-}
-#calendar-view_c .arrival.booking{
-	background:url(../icons/icon_green-red.png) 0 0 no-repeat;
-}
-#calendar-view_c .arrival.reservation{
-	background:url(../icons/icon_green-yellow.png) 0 0 no-repeat;
-}
-#calendar-view_c .departure.booking{
-	background:url(../icons/icon_red-green.png) 0 0 no-repeat;
-}
-#calendar-view_c .departure.reservation{
-	background:url(../icons/icon_yellow-green.png) 0 0 no-repeat;
-}
-#calendar-view_c .arrival.departure.booking{
-	background:url(../icons/icon_red.png) 0 0 no-repeat;
-}
-#calendar-view_c .arrival.departure.reservation{
-	background:url(../icons/icon_yellow.png) 0 0 no-repeat;
-}
-#calendar-view_c .arrival.departure.reservation.booking{
-	background:url(../icons/icon_yellow-red.png) 0 0 no-repeat;
-}
+#calendar-view_c .append_after .f,
 #calendar-view_c .append_before .arrival.booking,
-#calendar-view_c .append_after .arrival.booking{
-	background:url(../icons/icon_grey-red.png) 0 0 no-repeat;
-}
+#calendar-view_c .append_after .arrival.booking,
 #calendar-view_c .append_before .arrival.reservation,
-#calendar-view_c .append_after .arrival.reservation{
-	background:url(../icons/icon_grey-yellow.png) 0 0 no-repeat;
-}
+#calendar-view_c .append_after .arrival.reservation,
 #calendar-view_c .append_before .departure.booking,
-#calendar-view_c .append_after .departure.booking{
-	background:url(../icons/icon_red-grey.png) 0 0 no-repeat;
-}
+#calendar-view_c .append_after .departure.booking,
 #calendar-view_c .append_before .departure.reservation,
 #calendar-view_c .append_after .departure.reservation{
-	background:url(../icons/icon_yellow-grey.png) 0 0 no-repeat;
+	background-color:#bbb;
+}
+#calendar-view_c .append_before .odd.f,
+#calendar-view_c .append_after .odd.f,
+#calendar-view_c .append_before .arrival.booking.odd,
+#calendar-view_c .append_after .arrival.booking.odd,
+#calendar-view_c .append_before .arrival.reservation.odd,
+#calendar-view_c .append_after .arrival.reservation.odd,
+#calendar-view_c .append_before .departure.booking.odd,
+#calendar-view_c .append_after .departure.booking.odd,
+#calendar-view_c .append_before .departure.reservation.odd,
+#calendar-view_c .append_after .departure.reservation.odd{
+	background-color:#aaa;
+}
+#calendar-view_c .booking,
+#calendar-view_c .arrival.departure.booking,
+#calendar-view_c .arrival.departure.booking.odd{
+	background-color:#f00;
+}
+#calendar-view_c .booking.odd{
+	background-color:#e00;
+}
+#calendar-view_c .reservation,
+#calendar-view_c .arrival.departure.reservation,
+#calendar-view_c .append_before .arrival.departure.reservation,
+#calendar-view_c .append_after .arrival.departure.reservation{
+	background-color:#ff0;
+}
+#calendar-view_c .reservation.odd{
+	background-color:#ee0;
+}
+#calendar-view_c .arrival.booking,
+#calendar-view_c .arrival.departure.booking,
+#calendar-view_c .append_before .arrival.booking,
+#calendar-view_c .append_after .arrival.booking{
+	background-image:url(../icons/icon_trans-red.png);
+}
+#calendar-view_c .arrival.reservation,
+#calendar-view_c .arrival.departure.reservation,
+#calendar-view_c .append_before .arrival.reservation,
+#calendar-view_c .append_after .arrival.reservation,
+#calendar-view_c .append_before .arrival.departure.reservation,
+#calendar-view_c .append_after .arrival.departure.reservation{
+	background-image:url(../icons/icon_trans-yellow.png);
+}
+#calendar-view_c .departure.booking,
+#calendar-view_c .append_before .departure.booking,
+#calendar-view_c .append_after .departure.booking,
+#calendar-view_c .append_before .arrival.departure.booking,
+#calendar-view_c .append_after .arrival.departure.booking{
+	background-image:url(../icons/icon_red-trans.png);
+}
+#calendar-view_c .departure.reservation,
+#calendar-view_c .append_before .departure.reservation,
+#calendar-view_c .append_after .departure.reservation{
+	background-image:url(../icons/icon_yellow-trans.png);
+}
+#calendar-view_c .arrival.departure.reservation.booking,
+#calendar-view_c .append_before .arrival.departure.reservation.booking,
+#calendar-view_c .append_after .arrival.departure.reservation.booking{
+	background-image:url(../icons/icon_yellow-red.png);
 }
 #calendar-view_c .control-1,
 #calendar-view_c .control-2{
