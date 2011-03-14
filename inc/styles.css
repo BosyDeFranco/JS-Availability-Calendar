@@ -1,3 +1,11 @@
+#calendar-view_c{
+	font-size:11px;
+}
+#calendar-view_c table{
+	border-spacing:2px;
+	empty-cells:show;
+	table-layout:fixed;
+}
 #calendar-view_c .pagemcontainer p{
 	margin:0;
 }
@@ -140,4 +148,8 @@
 #calendar-view_c .control-1.active,
 #calendar-view_c .control-2.active{
 	background:#999;
+}
+#calendar-view_c .legend td{
+	color:#000;
+	width:auto;
 }

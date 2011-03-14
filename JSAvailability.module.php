@@ -10,6 +10,7 @@
  * - loading hint
  * - proof overlap check
  * - correct cursors
+ * - stylesheet bei Deinstallation löschen
  * @license GPL
  **/
 class JSAvailability extends CMSModule
@@ -149,6 +150,57 @@ class JSAvailability extends CMSModule
 		$pads = array('left'=>STR_PAD_LEFT, 'right'=>STR_PAD_RIGHT, 'both'=>STR_PAD_BOTH);
 		if(array_key_exists($pad_type, $pads))
 			return str_pad($string, $length ,$pad_string,$pads[$pad_type]);
+	}
+	function getEntries(){
+		$db =& cmsms()->GetDb();
+
+		$query = 'SELECT type, DATE(arrival) as arrival, DATE(departure) as departure FROM '.cms_db_prefix().'module_jsavailability ORDER BY id DESC';
+
+		$dbresult = $db->Execute($query);
+		$entries = array();
+		while ($dbresult && $row = $dbresult->FetchRow()){
+			$entry = new stdClass();
+			$entry->arrival = $row['arrival'];
+			$entry->departure = $row['departure'];
+			$entry->type = $row['type'];
+			$entries[$row['arrival']] = $entry;
+		}
+		return $entries;
+	}
+	function smartyConfig($admin = false){
+		$config = cmsms()->GetConfig();
+		$smarty = cmsms()->GetSmarty();
+
+		$append_start = $this->GetPreference('append_months_before', 2);;
+		$append_end = $this->GetPreference('append_months_after', 2);
+		$current_year = $this->GetPreference('current_year', date('Y'));
+
+		$smarty->assign('entries', $this->getEntries());
+
+		$years[$current_year-1] = $this->getYearInfo($current_year-1);
+		$years[$current_year] = $this->getYearInfo($current_year);
+		$years[$current_year+1] = $this->getYearInfo($current_year+1);
+		$smarty->assign('years', $years);
+		$smarty->assign('timestamps', $this->getMonthTimestamps());
+
+		$smarty->assign('year', $current_year);
+		$smarty->assign('sundayabbrlabel', substr(strftime('%a', 1298761200), 0, 1));
+		$smarty->assign('sundaylabel', strftime('%A', 1298761200));
+		$smarty->assign('append_before', $this->GetPreference('append_months_before', 2));
+		$smarty->assign('append_after', $this->GetPreference('append_months_after', 2));
+
+		$smarty->assign('incdir', $config['root_url'].'/modules/JSAvailability/inc/');
+
+		if($admin){
+			$smarty->assign('selectyearlabel', $this->Lang('selectyear'));
+			$smarty->assign('selectyear', $this->CreateInputDropdown($id, 'y', $this->createYearDropdown(), -1, (string)$current_year, 'id="'.$id.'y"'));
+
+			$smarty->assign('admindir', $config['root_url'].'/'.$config['admin_dir']);
+			$smarty->assign('userkey', $_SESSION[CMS_USER_KEY]);
+			$smarty->assign('formid', $id);
+			$smarty->assign('selectyearlabel', $this->Lang('selectyear'));
+			$smarty->assign('selectyear', $this->CreateInputDropdown($id, 'y', $this->createYearDropdown(), -1, (string)$current_year, 'id="'.$id.'y"'));
+		}
 	}
 }
 ?>
