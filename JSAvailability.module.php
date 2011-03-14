@@ -6,10 +6,10 @@
  * @modifiedby $LastChangedBy: foaly* $
  * @lastmodified $Date: 2011-03-13 22:42 +0200 $
  * TODO:
- * - check td id of append months
- * - save period
- * - reload? -> wrapper div
+ * - correct year for append months
+ * - show saved entries
  * - icons
+ * - loading hint
  * @license GPL
  **/
 class JSAvailability extends CMSModule
@@ -118,7 +118,7 @@ class JSAvailability extends CMSModule
 		$this->SetPreference('current_year', $year);
 		return true;
 	}
-	function postPeriod($arrival, $departure){
+	function postPeriod($arrival, $departure, $type){
 		$arrival = strtotime($arrival);
 		$departure = strtotime($departure);
 		if(!$arrival || !$departure || $departure <= $arrival)
@@ -129,7 +129,11 @@ class JSAvailability extends CMSModule
 		$dbresult = $db->Execute($query, array($arrival, $departure));
 		if($dbresult->NumRows() > 0)
 			return $this->Lang('overlap');
-		return 'ok';
+
+		$types = array('reservation' => 1, 'booking' => 2);
+		$query = 'INSERT INTO '.cms_db_prefix().'module_jsavailability (type, arrival, departure) VALUES (?, FROM_UNIXTIME(?), FROM_UNIXTIME(?))';
+		$db->Execute($query, array($types[$type], $arrival, $departure));
+		return $this->Lang('saved');
 	}
 	function smarty_modifier_str_pad($string, $length, $pad_string='', $pad_type='left'){
 		$pads = array('left'=>STR_PAD_LEFT, 'right'=>STR_PAD_RIGHT, 'both'=>STR_PAD_BOTH);

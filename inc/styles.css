@@ -28,6 +28,7 @@
 #calendar-view_c .f{
 	background:#0c0;
 }
+#calendar-view_c .clickable .departure,
 #calendar-view_c .clickable .f{
 	cursor:pointer;
 }
@@ -41,6 +42,24 @@
 #calendar-view_c .append_before .odd.f,
 #calendar-view_c .append_after .odd.f{
 	background:#aaa;
+}
+#calendar-view_c .booking{
+	background:#f00;
+}
+#calendar-view_c .booking.odd{
+	background:#e00;
+}
+#calendar-view_c .arrival.booking{
+	background:url(../icons/icon_green-red.png) 0 0 no-repeat;
+}
+#calendar-view_c .arrival.reservation{
+	background:url(../icons/icon_green-yellow.png) 0 0 no-repeat;
+}
+#calendar-view_c .departure.booking{
+	background:url(../icons/icon_red-green.png) 0 0 no-repeat;
+}
+#calendar-view_c .departure.reservation{
+	background:url(../icons/icon_yellow-green.png) 0 0 no-repeat;
 }
 #calendar-view_c .control-1,
 #calendar-view_c .control-2{

@@ -1,3 +1,4 @@
+<div id="reloadArea">
 <script type="text/javascript">
 <!--
 var CMS_ADMIN_DIR = '{$admindir}';
@@ -41,3 +42,4 @@ var CMS_FORM_ID = '{$formid}';
 		<td id="booking-ctrl" class="control-2 active">Buchung</td>
 	</tr>
 </table>
+</div>

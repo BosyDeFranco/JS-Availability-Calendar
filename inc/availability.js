@@ -2,7 +2,7 @@ $(function(){
 		   initYearSwitch();
 		   initCalendar();
 });
-function ajax_function(usr_function, params){
+function ajax_function(usr_function, params, avoid_answer){
 	return $.post(CMS_ADMIN_DIR+"/moduleinterface.php", { 
 			mact: 'JSAvailability,m1_,ajax,0',
 			sp_: CMS_USER_KEY,
@@ -11,8 +11,8 @@ function ajax_function(usr_function, params){
 			m1_params: params
 		},
 		function(data){
-			if(data != ''){
-				var message = $('<div class="pagemcontainer"><p class="pagemessage">' + data + '</p></div>').prependTo('#calendar-view_c');
+			if(avoid_answer != true && data != ''){
+				var message = $('<div class="pagemcontainer"><p class="pagemessage">' + data + '</p></div>').insertBefore('#reloadArea');
 				window.setTimeout(function(){ message.hide(); }, 9000);
 			}
 		}
@@ -26,14 +26,14 @@ function ajax_tab(usr_tab, container){
 			showtemplate: false
 		},
 		function(data){
-			$(container).html(data);
+			$(container).replaceWith(data);
 		}
 	);
 }
 function initYearSwitch(){
 	$('#' + CMS_FORM_ID + 'y').change(function(){
-		ajax_function('setCurrentYear', $(this).val());
-		ajax_tab('calendartab', '#calendar-view_c');
+		ajax_function('setCurrentYear', $(this).val(), true);
+		ajax_tab('calendartab', '#reloadArea');
    });
 }
 function initCalendar(){
@@ -45,10 +45,10 @@ function initCalendar(){
 
 	// Table
 	function postPeriod(){
-		ajax_function('postPeriod', arrival+','+departure);
+		ajax_function('postPeriod', arrival+','+departure+','+mode_status);
 		arrival = '';
 		departure = '';
-		//ajax_tab('calendartab', '#calendar-view_c');
+		ajax_tab('calendartab', '#reloadArea');
 	}
 	$('td', _t).each(function(){
 		$(this).click(function(){
@@ -56,11 +56,22 @@ function initCalendar(){
 			if(mode_action == '')
 				return;
 
-			if(a.hasClass('f')){
+			if(a.hasClass('f') || a.hasClass('departure')){
 				switch(mode_action){
 					case 'arrival':
 						arrival = a.attr('id');
+						a.removeClass('f').addClass('arrival').addClass(mode_status);
 						changeModeAction('departure');
+						$('td', _t).hover(
+							function(){
+								if($(this).attr('id').replace(/-/g, '') <= arrival.replace(/-/g, '') || $(this).hasClass('f') == false)
+									return;
+								$(this).data('class', $(this).attr('class')).attr('class', 'departure '+mode_status);
+							},
+							function(){
+								$(this).attr('class', $(this).data('class'));
+							}
+						);
 						break;
 					case 'departure':
 						if(a.attr('id').replace(/-/g, '') <= arrival.replace(/-/g, ''))
@@ -68,6 +79,7 @@ function initCalendar(){
 						departure = a.attr('id');
 						postPeriod();
 						clearModeAction();
+						$('td', _t).unbind('mouseenter mouseleave');
 						break;
 				}
 			}

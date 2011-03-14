@@ -8,12 +8,13 @@ $lang['installed'] = 'Module in Version %s installiert.';
 $lang['prefsupdated'] = 'Einstellungen gespeichert.';
 $lang['help'] = 'Keine Hilfe hinterlegt.';
 $lang['changelog'] = '';
-$lang['moddescription'] = 'Gibt die Möglichkeit, einen Belegungsplan über das CMS zu erstellen und zu bearbeiten und diesen im Frontend auszugeben.';
+$lang['moddescription'] = 'Verwaltung der Belegungen in einer Jahresansicht (AJAX-basiert).';
 
 $lang['calendar-view'] = 'Kalender Ansicht';
 $lang['selectyear'] = 'Jahr anzeigen';
 $lang['wrongdateformat'] = 'Fehler: Falsches Datumsformat!';
-$lang['overlap'] = '&Uuml;berlappende Eintr&auml;ge nicht m&ouml;glich.';
+$lang['overlap'] = 'Nicht m&ouml;glich: Eintr&auml;ge &uuml;berschneiden sich.';
+$lang['saved'] = 'Erfolgreich gespeichert.';
 
 $lang['preferences'] = 'Einstellungen';
 $lang['append_months_before'] = 'Monate vorne anf&uuml;gen';
