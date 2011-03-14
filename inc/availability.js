@@ -56,32 +56,36 @@ function initCalendar(){
 			if(mode_action == '')
 				return;
 
-			if(a.hasClass('f') || a.hasClass('departure')){
-				switch(mode_action){
-					case 'arrival':
-						arrival = a.attr('id');
-						a.removeClass('f').addClass('arrival').addClass(mode_status);
-						changeModeAction('departure');
-						$('td', _t).hover(
-							function(){
-								if($(this).attr('id').replace(/-/g, '') <= arrival.replace(/-/g, '') || $(this).hasClass('f') == false)
-									return;
-								$(this).data('class', $(this).attr('class')).attr('class', 'departure '+mode_status);
-							},
-							function(){
-								$(this).attr('class', $(this).data('class'));
-							}
-						);
+			switch(mode_action){
+				case 'arrival':
+					if(a.hasClass('f') == false && a.hasClass('departure') == false)
 						break;
-					case 'departure':
-						if(a.attr('id').replace(/-/g, '') <= arrival.replace(/-/g, ''))
-							return;
-						departure = a.attr('id');
-						postPeriod();
-						clearModeAction();
-						$('td', _t).unbind('mouseenter mouseleave');
+					arrival = a.attr('id');
+					a.removeClass('f').addClass('arrival').addClass(mode_status);
+					changeModeAction('departure');
+					$('td', _t).hover(
+						function(){
+							if($(this).attr('id').replace(/-/g, '') <= arrival.replace(/-/g, '') || $(this).hasClass('f') == false)
+								return;
+							$(this).data('class', $(this).attr('class')).attr('class', 'departure '+mode_status);
+						},
+						function(){
+							$(this).attr('class', $(this).data('class'));
+						}
+					);
+					break;
+				case 'departure':
+					if(a.attr('id').replace(/-/g, '') <= arrival.replace(/-/g, ''))
 						break;
-				}
+					departure = a.attr('id');
+					postPeriod();
+					clearModeAction();
+					$('td', _t).unbind('mouseenter mouseleave');
+					break;
+				case 'delete':
+					ajax_function('deletePeriod', $(this).attr('id'));
+					ajax_tab('calendartab', '#reloadArea');
+					break;
 			}
 		});
 	 });

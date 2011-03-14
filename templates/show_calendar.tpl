@@ -21,11 +21,14 @@ var CMS_FORM_ID = '{$formid}';
 		<tr{if $month <= $append_before} class="append_before"{elseif $month > $append_before+12} class="append_after"{/if}>
 	{if $month <= $append_before}{assign var="month" value=$month+12-$append_before}{elseif $month > $append_before+12}{assign var="month" value=$month-12-$append_before}{else}{assign var="month" value=$month-$append_before}{/if}
 		{section name="day" loop=$years[$year][$month].length+1}
+			{capture assign="id"}{$year}-{$month|js_str_pad:2:'0':'left'}-{$smarty.section.day.index|js_str_pad:2:'0':'left'}{/capture}
+			{if $entries[$id]}{assign var="just_started" value=$id}{/if}
 			{if $smarty.section.day.index == 0}
 			<td class="month_name">{$timestamps[$month]|date_format:"%B"|escape:"htmlall"}</td>
 			{else}
-			<td class="f{if $smarty.section.day.index % 2 == 0} odd{/if}" id="{$year}-{$month|js_str_pad:2:'0':'left'}-{$smarty.section.day.index|js_str_pad:2:'0':'left'}">{if $years[$year][$month].sundays[$smarty.section.day.index]}{$sundayabbrlabel}{/if}</td>
+			<td class="{if $started == '' && $just_started == ''}f{else}{if $entries[$started]->type == 1 || $entries[$just_started]->type == 1}reservation{/if}{if $entries[$started]->type == 2 || $entries[$just_started]->type == 2} booking{/if}{/if}{if $just_started == $id} arrival{/if}{if $entries[$started]->departure == $id} departure{/if}{if $smarty.section.day.index % 2 == 0} odd{/if}" id="{$id}">{if $years[$year][$month].sundays[$smarty.section.day.index]}{$sundayabbrlabel}{/if}</td>
 			{/if}
+			{if $started != '' && $entries[$started]->departure == $id}{assign var="started" value=""}{elseif $just_started != ''}{assign var="started" value=$just_started}{assign var="just_started" value=""}{/if}
 		{/section}
 		</tr>
 	{/section}

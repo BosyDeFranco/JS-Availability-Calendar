@@ -6,10 +6,10 @@
  * @modifiedby $LastChangedBy: foaly* $
  * @lastmodified $Date: 2011-03-13 22:42 +0200 $
  * TODO:
- * - correct year for append months
- * - show saved entries
+ * - correct year for append months !!
  * - icons
  * - loading hint
+ * - proof overlap check
  * @license GPL
  **/
 class JSAvailability extends CMSModule
@@ -119,12 +119,13 @@ class JSAvailability extends CMSModule
 		return true;
 	}
 	function postPeriod($arrival, $departure, $type){
-		$arrival = strtotime($arrival);
-		$departure = strtotime($departure);
+		$arrival = strtotime($arrival)+100;
+		$departure = strtotime($departure)+100;
 		if(!$arrival || !$departure || $departure <= $arrival)
 			return $this->Lang('wrongdateformat');
 
 		$db =& cmsms()->GetDb();
+		// does this work in all cases?
 		$query = 'SELECT id FROM `'.cms_db_prefix().'module_jsavailability` WHERE UNIX_TIMESTAMP(arrival) > ? AND UNIX_TIMESTAMP(arrival) < ?';
 		$dbresult = $db->Execute($query, array($arrival, $departure));
 		if($dbresult->NumRows() > 0)
@@ -134,6 +135,15 @@ class JSAvailability extends CMSModule
 		$query = 'INSERT INTO '.cms_db_prefix().'module_jsavailability (type, arrival, departure) VALUES (?, FROM_UNIXTIME(?), FROM_UNIXTIME(?))';
 		$db->Execute($query, array($types[$type], $arrival, $departure));
 		return $this->Lang('saved');
+	}
+	function deletePeriod($date){
+		$date = strtotime($date)+100;
+		if(!$date)
+			return $this->Lang('wrongdateformat');
+
+		$db =& cmsms()->GetDb();
+		$query = 'DELETE FROM '.cms_db_prefix().'module_jsavailability WHERE UNIX_TIMESTAMP(arrival) <= ? AND UNIX_TIMESTAMP(departure) >= ?';
+		$db->Execute($query, array($date, $date));
 	}
 	function smarty_modifier_str_pad($string, $length, $pad_string='', $pad_type='left'){
 		$pads = array('left'=>STR_PAD_LEFT, 'right'=>STR_PAD_RIGHT, 'both'=>STR_PAD_BOTH);

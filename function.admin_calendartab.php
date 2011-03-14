@@ -12,12 +12,17 @@ $current_year = $this->GetPreference('current_year', date('Y'));
 // Load entries
 $entryarray = array();
 
-$query = 'SELECT type, start, end FROM '.cms_db_prefix().'module_jsavailability ORDER BY id DESC';
+$query = 'SELECT type, DATE(arrival) as arrival, DATE(departure) as departure FROM '.cms_db_prefix().'module_jsavailability ORDER BY id DESC';
 
 $dbresult = $db->Execute($query);
-while ($dbresult && $row = $dbresult->FetchRow())
-	$guests[str_replace('-', '', $row['start'])] = array('end' => str_replace('-', '', $row['end']), 'type' => $row['type']);
-$smarty->assign('guests', $guests);
+while ($dbresult && $row = $dbresult->FetchRow()){
+	$entry = new stdClass();
+	$entry->arrival = $row['arrival'];
+	$entry->departure = $row['departure'];
+	$entry->type = $row['type'];
+	$entries[$row['arrival']] = $entry;
+}
+$smarty->assign('entries', $entries);
 
 $years[$current_year-1] = $this->getYearInfo($current_year-1);
 $years[$current_year] = $this->getYearInfo($current_year);
