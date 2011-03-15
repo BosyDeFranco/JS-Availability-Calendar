@@ -23,6 +23,15 @@
 	background-position:0 0;
 	background-repeat:no-repeat;
 }
+#calendar-view_c .separator td{
+	color:#254c6d;
+	font-size:18px;
+	line-height:25px;
+	vertical-align:top;
+	font-weight: normal;
+	text-align:left;
+	padding:10px 0 0;
+}
 #calendar-view_c .month_name{
 	padding-right:10px;
 	text-align:right;

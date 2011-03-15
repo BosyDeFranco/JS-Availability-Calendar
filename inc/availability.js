@@ -2,7 +2,7 @@ $(function(){
 		   initYearSwitch();
 		   initCalendar();
 });
-function ajax_function(usr_function, params, avoid_answer){
+function ajax_function(usr_function, params, avoid_answer, callback){
 	return $.post(CMS_ADMIN_DIR+"/moduleinterface.php", { 
 			mact: 'JSAvailability,m1_,ajax,0',
 			sp_: CMS_USER_KEY,
@@ -15,6 +15,8 @@ function ajax_function(usr_function, params, avoid_answer){
 				var message = $('<div class="pagemcontainer"><p class="pagemessage">' + data + '</p></div>').insertBefore('#reloadArea');
 				window.setTimeout(function(){ message.hide(); }, 9000);
 			}
+			if(typeof callback == 'function')
+				callback();
 		}
 	);
 }
@@ -30,10 +32,12 @@ function ajax_tab(usr_tab, container){
 		}
 	);
 }
+function reload(){
+	ajax_tab('calendartab', '#reloadArea');
+}
 function initYearSwitch(){
 	$('#' + CMS_FORM_ID + 'y').change(function(){
-		ajax_function('setCurrentYear', $(this).val(), true);
-		ajax_tab('calendartab', '#reloadArea');
+		ajax_function('setCurrentYear', $(this).val(), true, reload);
    });
 }
 function initCalendar(){
@@ -48,7 +52,7 @@ function initCalendar(){
 		ajax_function('postPeriod', arrival+','+departure+','+mode_status);
 		arrival = '';
 		departure = '';
-		ajax_tab('calendartab', '#reloadArea');
+		reload();
 	}
 	$('td', _t).each(function(){
 		$(this).click(function(){
@@ -84,7 +88,7 @@ function initCalendar(){
 					break;
 				case 'delete':
 					ajax_function('deletePeriod', $(this).attr('id'));
-					ajax_tab('calendartab', '#reloadArea');
+					reload();
 					break;
 			}
 		});

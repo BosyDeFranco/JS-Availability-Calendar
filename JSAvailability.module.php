@@ -173,7 +173,7 @@ class JSAvailability extends CMSModule
 
 		$append_start = $this->GetPreference('append_months_before', 2);;
 		$append_end = $this->GetPreference('append_months_after', 2);
-		$current_year = $this->GetPreference('current_year', date('Y'));
+		$current_year = $admin ? $this->GetPreference('current_year', date('Y')) : date('Y');
 
 		$smarty->assign('entries', $this->getEntries());
 
