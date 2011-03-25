@@ -6,11 +6,12 @@
  * @modifiedby $LastChangedBy: foaly* $
  * @lastmodified $Date: 2011-03-13 22:42 +0200 $
  * TODO:
- * - icons
+ * - icons in notifications
  * - loading hint
  * - proof overlap check
  * - correct cursors
- * - stylesheet bei Deinstallation löschen
+ * - delete stylesheet on uninstall (?)
+ * - database-driven fe template
  * @license GPL
  **/
 class JSAvailability extends CMSModule
@@ -31,7 +32,7 @@ class JSAvailability extends CMSModule
 		return $this->Lang('friendlyname');
 	}
 	function GetVersion(){
-		return '0.9';
+		return '0.9.1';
 	}
 	function GetHelp(){
 		return $this->Lang('help');
@@ -119,6 +120,12 @@ class JSAvailability extends CMSModule
 		$this->SetPreference('current_year', $year);
 		return true;
 	}
+	function setCurrentObject($object){
+		if(!preg_match('#^[0-9]+$#', $object))
+			return false;
+		$this->SetPreference('current_object', $object);
+		return true;
+	}
 	function postPeriod($arrival, $departure, $type){
 		$arrival = strtotime($arrival)+100;
 		$departure = strtotime($departure)+100;
@@ -133,8 +140,8 @@ class JSAvailability extends CMSModule
 			return $this->Lang('overlap');
 
 		$types = array('reservation' => 1, 'booking' => 2);
-		$query = 'INSERT INTO '.cms_db_prefix().'module_jsavailability (type, arrival, departure) VALUES (?, FROM_UNIXTIME(?), FROM_UNIXTIME(?))';
-		$db->Execute($query, array($types[$type], $arrival, $departure));
+		$query = 'INSERT INTO '.cms_db_prefix().'module_jsavailability (type, arrival, departure, ref_object) VALUES (?, FROM_UNIXTIME(?), FROM_UNIXTIME(?), ?)';
+		$db->Execute($query, array($types[$type], $arrival, $departure, $this->GetPreference('current_object', 1)));
 		return $this->Lang('saved');
 	}
 	function deletePeriod($date){
@@ -174,6 +181,7 @@ class JSAvailability extends CMSModule
 		$append_start = $this->GetPreference('append_months_before', 2);;
 		$append_end = $this->GetPreference('append_months_after', 2);
 		$current_year = $admin ? $this->GetPreference('current_year', date('Y')) : date('Y');
+		$current_object = $admin ? $this->GetPreference('current_object', 1) : $params['object_id'];
 
 		$smarty->assign('entries', $this->getEntries());
 
@@ -194,6 +202,8 @@ class JSAvailability extends CMSModule
 		if($admin){
 			$smarty->assign('selectyearlabel', $this->Lang('selectyear'));
 			$smarty->assign('selectyear', $this->CreateInputDropdown($id, 'y', $this->createYearDropdown(), -1, (string)$current_year, 'id="'.$id.'y"'));
+			$smarty->assign('selectobjectlabel', $this->Lang('selectobject'));
+			$smarty->assign('selectobject', $this->CreateInputDropdown($id, 'o', $this->createObjectsDropdown(), -1, (string)$current_object, 'id="'.$id.'o"'));
 
 			$smarty->assign('admindir', $config['root_url'].'/'.$config['admin_dir']);
 			$smarty->assign('userkey', $_SESSION[CMS_USER_KEY]);
@@ -201,6 +211,14 @@ class JSAvailability extends CMSModule
 			$smarty->assign('selectyearlabel', $this->Lang('selectyear'));
 			$smarty->assign('selectyear', $this->CreateInputDropdown($id, 'y', $this->createYearDropdown(), -1, (string)$current_year, 'id="'.$id.'y"'));
 		}
+	}
+	function createObjectsDropdown(){
+		$db = cmsms()->GetDb();
+		$dbresult = $db->Execute('SELECT id, name FROM '.cms_db_prefix().'module_jsavailability_objects');
+		$dropdown = array();
+		while($dbresult && $row = $dbresult->FetchRow())
+			$dropdown[$row['name']] = $row['id'];
+		return $dropdown;
 	}
 }
 ?>

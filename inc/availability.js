@@ -1,5 +1,6 @@
 $(function(){
 		   initYearSwitch();
+		   initObjectSwitch();
 		   initCalendar();
 });
 function ajax_function(usr_function, params, avoid_answer, callback){
@@ -38,6 +39,11 @@ function reload(){
 function initYearSwitch(){
 	$('#' + CMS_FORM_ID + 'y').change(function(){
 		ajax_function('setCurrentYear', $(this).val(), true, reload);
+   });
+}
+function initObjectSwitch(){
+	$('#' + CMS_FORM_ID + 'o').change(function(){
+		ajax_function('setCurrentObject', $(this).val(), true, reload);
    });
 }
 function initCalendar(){

@@ -13,9 +13,17 @@ $lang['moddescription'] = 'Verwaltung der Belegungen in einer Jahresansicht (AJA
 
 $lang['calendar-view'] = 'Kalender Ansicht';
 $lang['selectyear'] = 'Jahr anzeigen';
+$lang['selectobject'] = 'Objekt anzeigen';
 $lang['wrongdateformat'] = 'Fehler: Falsches Datumsformat!';
 $lang['overlap'] = 'Nicht m&ouml;glich: Eintr&auml;ge &uuml;berschneiden sich.';
 $lang['saved'] = 'Erfolgreich gespeichert.';
+
+$lang['objects'] = 'Objekte';
+$lang['defaultobject'] = 'Standard Objekt';
+$lang['id'] = 'ID';
+$lang['objectname'] = 'Objektname';
+$lang['edit'] = 'Bearbeiten';
+$lang['delete'] = 'Löschen';
 
 $lang['preferences'] = 'Einstellungen';
 $lang['append_months_before'] = 'Monate vorne anf&uuml;gen';

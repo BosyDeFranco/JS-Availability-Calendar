@@ -9,6 +9,7 @@ var CMS_FORM_ID = '{$formid}';
 <script type="text/javascript" src="{$incdir}availability.js"></script>
 <link rel="stylesheet" type="text/css" href="{$incdir}styles.css" />
 <p>{$selectyearlabel}: {$selectyear}</p>
+<p>{$selectobjectlabel}: {$selectobject}</p>
 <table>
 	<tr class="day_names">
 		<td>&nbsp;</td>
