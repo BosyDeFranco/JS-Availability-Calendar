@@ -13,9 +13,17 @@ $lang['moddescription'] = 'Manage availability in an annual view (AJAX-based).';
 
 $lang['calendar-view'] = 'Calendar view';
 $lang['selectyear'] = 'Show year';
+$lang['selectobject'] = 'Show object';
 $lang['wrongdateformat'] = 'Error: Wrong date format!';
 $lang['overlap'] = 'Not possible: Entries overlap';
 $lang['saved'] = 'Successfully saved.';
+
+$lang['objects'] = 'Objects';
+$lang['defaultobject'] = 'Default object';
+$lang['id'] = 'ID';
+$lang['objectname'] = 'Objekt name';
+$lang['edit'] = 'Edit';
+$lang['delete'] = 'Delete';
 
 $lang['preferences'] = 'Preferences';
 $lang['append_months_before'] = 'Append years at the beginning';

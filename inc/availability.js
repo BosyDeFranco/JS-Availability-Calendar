@@ -130,3 +130,21 @@ function initCalendar(){
 		changeModeStatus('booking');
 	});
 }
+function editObject(el){
+	var container = $(el).parent().parent().children('.objectname');
+	var input = $('<input type="text" size="55" />').val(container.html());
+	container.html(input);
+	$(el).parent().data('original', $(el)).end().replaceWith(CMS_SAVE_ICON);
+}
+function saveObject(el){
+	$(el).attr('onclick', '').click(function(){return false});
+	var container = $(el).parent().parent().children('.objectname');
+	var input = $('input', container);
+	var object_id = container.parent().children('td:first-child').html();
+	container.addClass('loading').append('<img src="' + CMS_INC_DIR + 'ajax-loader.gif" class="animation" />');
+	ajax_function('saveObject', object_id+','+input.val(), true, function(){
+		$(el).replaceWith($(el).parent().data('original'));
+		container.removeClass('loading').html(input.val());
+		reload();
+	});
+}

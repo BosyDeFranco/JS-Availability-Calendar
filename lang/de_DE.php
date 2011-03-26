@@ -23,7 +23,8 @@ $lang['defaultobject'] = 'Standard Objekt';
 $lang['id'] = 'ID';
 $lang['objectname'] = 'Objektname';
 $lang['edit'] = 'Bearbeiten';
-$lang['delete'] = 'Löschen';
+$lang['delete'] = 'L&ouml;schen';
+$lang['save'] = 'Speichern';
 
 $lang['preferences'] = 'Einstellungen';
 $lang['append_months_before'] = 'Monate vorne anf&uuml;gen';

@@ -220,5 +220,9 @@ class JSAvailability extends CMSModule
 			$dropdown[$row['name']] = $row['id'];
 		return $dropdown;
 	}
+	function saveObject($id, $name){
+		$db = cmsms()->GetDb();
+		$db->Execute('UPDATE '.cms_db_prefix().'module_jsavailability_objects SET name = ? WHERE id = ?', array($name, $id));
+	}
 }
 ?>
