@@ -8,9 +8,7 @@
  * TODO:
  * - icons in notifications
  * - loading hint
- * - proof overlap check
  * - correct cursors
- * - delete stylesheet on uninstall (?)
  * - database-driven fe template
  * @license GPL
  **/
@@ -235,6 +233,12 @@ class JSAvailability extends CMSModule
 	function deleteObject($object){
 		$db = cmsms()->GetDb();
 		$db->Execute('DELETE FROM '.cms_db_prefix().'module_jsavailability_objects WHERE id = ?', array($object));
+	}
+	function DisplayImage($imageName, $alt='', $width='', $height='', $class=''){
+		$admintheme =& cmsms()->variables['admintheme'];
+		if(!is_object($admintheme))
+			$admintheme = new AdminTheme(cmsms(), cmsms()->variables['user_id'], cmsms()->userprefs['admintheme']);
+		return $admintheme->DisplayImage($imageName, $alt, $width, $height, $class);
 	}
 }
 ?>
