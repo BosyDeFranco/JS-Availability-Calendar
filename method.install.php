@@ -4,7 +4,7 @@ $taboptarray = array( 'mysql' => 'TYPE=MyISAM' );
 $dict = NewDataDictionary( $db );
 			
 $sqlarray = $dict->CreateTableSQL(cms_db_prefix()."module_jsavailability",
-	"id I AUTO KEY, type I, arrival TS, departure TS, ref_object I",
+	"id I AUTO KEY, type I, arrival TS DEFAULT 0, departure TS DEFAULT 0, ref_object I",
 	$taboptarray);
 $dict->ExecuteSQLArray($sqlarray);
 
