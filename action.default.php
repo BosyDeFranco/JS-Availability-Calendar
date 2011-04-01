@@ -1,5 +1,5 @@
 <?php
-if(!preg_match('#[0-9]{4}#', $params['year'])){
+if(isset($params['year']) && !preg_match('#[0-9]{4}#', $params['year'])){
 	echo sprintf('<p style="color:#f00">%s</p>', $this->Lang('wrongdateformat'));
 	exit;
 }

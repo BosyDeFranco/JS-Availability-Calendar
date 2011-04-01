@@ -76,7 +76,7 @@ class JSAvailability extends CMSModule
 		$this->RestrictUnknownParams();
 		$this->CreateParameter('object_id', 1, $this->Lang('help_object_id'));
 		$this->SetParameterType('object_id', CLEAN_INT);
-		$this->CreateParameter('year', 1, $this->Lang('help_year'));
+		$this->CreateParameter('year', date('Y'), $this->Lang('help_year'));
 		$this->SetParameterType('year', CLEAN_INT);
 	}
 	function InstallPostMessage(){
