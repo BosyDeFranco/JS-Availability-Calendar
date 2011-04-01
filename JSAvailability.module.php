@@ -153,7 +153,7 @@ class JSAvailability extends CMSModule
 
 		$db =& cmsms()->GetDb();
 		$query = 'DELETE FROM '.cms_db_prefix().'module_jsavailability WHERE UNIX_TIMESTAMP(arrival) <= ? AND UNIX_TIMESTAMP(departure) >= ? AND ref_object = ?';
-		$db->Execute($query, array($date, $date, $this->GetPreference('current_object', -1)));
+		$db->Execute($query, array($date, $date, $this->GetPreference('current_object', 1)));
 	}
 	function smarty_modifier_str_pad($string, $length, $pad_string='', $pad_type='left'){
 		$pads = array('left'=>STR_PAD_LEFT, 'right'=>STR_PAD_RIGHT, 'both'=>STR_PAD_BOTH);
