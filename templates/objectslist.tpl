@@ -1,3 +1,4 @@
+<div id="reloadAreaO">
 <script type="text/javascript">
 <!--
 var CMS_ADMIN_DIR = '{$admindir}';
@@ -28,3 +29,5 @@ var CMS_SAVE_ICON = '{$saveicon}';
 	{/foreach}
 	</tbody>
 </table>
+<a href="#">{$addlink}</a>
+</div>

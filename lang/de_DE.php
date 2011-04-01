@@ -10,6 +10,8 @@ $lang['error'] = 'Fehler!';
 $lang['help'] = 'Keine Hilfe hinterlegt.';
 $lang['changelog'] = '';
 $lang['moddescription'] = 'Verwaltung der Belegungen in einer Jahresansicht (AJAX-basiert).';
+$lang['help_object_id'] = 'Objekt, dessen Belegung gezeigt werden soll.';
+$lang['help_year'] = 'Anzuzeigendes Jahr im Format JJJJ.';
 
 $lang['calendar-view'] = 'Kalender Ansicht';
 $lang['selectyear'] = 'Jahr anzeigen';
@@ -25,6 +27,8 @@ $lang['objectname'] = 'Objektname';
 $lang['edit'] = 'Bearbeiten';
 $lang['delete'] = 'L&ouml;schen';
 $lang['save'] = 'Speichern';
+$lang['add'] = 'Hinzuf&uuml;gen';
+$lang['newobject'] = 'Neues Objekt';
 
 $lang['preferences'] = 'Einstellungen';
 $lang['append_months_before'] = 'Monate vorne anf&uuml;gen';

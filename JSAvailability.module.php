@@ -76,6 +76,10 @@ class JSAvailability extends CMSModule
 	function SetParameters(){
 		$this->RegisterModulePlugin();
 		$this->RestrictUnknownParams();
+		$this->CreateParameter('object_id', 1, $this->Lang('help_object_id'));
+		$this->SetParameterType('object_id', CLEAN_INT);
+		$this->CreateParameter('year', 1, $this->Lang('help_year'));
+		$this->SetParameterType('year', CLEAN_INT);
 	}
 	function InstallPostMessage(){
 		return $this->Lang('postinstall');
@@ -134,8 +138,8 @@ class JSAvailability extends CMSModule
 
 		$db =& cmsms()->GetDb();
 		// does this work in all cases?
-		$query = 'SELECT id FROM `'.cms_db_prefix().'module_jsavailability` WHERE UNIX_TIMESTAMP(arrival) > ? AND UNIX_TIMESTAMP(arrival) < ?';
-		$dbresult = $db->Execute($query, array($arrival, $departure));
+		$query = 'SELECT id FROM `'.cms_db_prefix().'module_jsavailability` WHERE UNIX_TIMESTAMP(arrival) > ? AND UNIX_TIMESTAMP(arrival) < ? AND ref_object = ?';
+		$dbresult = $db->Execute($query, array($arrival, $departure, $this->GetPreference('current_object', 1)));
 		if($dbresult->NumRows() > 0)
 			return $this->Lang('overlap');
 
@@ -150,20 +154,20 @@ class JSAvailability extends CMSModule
 			return $this->Lang('wrongdateformat');
 
 		$db =& cmsms()->GetDb();
-		$query = 'DELETE FROM '.cms_db_prefix().'module_jsavailability WHERE UNIX_TIMESTAMP(arrival) <= ? AND UNIX_TIMESTAMP(departure) >= ?';
-		$db->Execute($query, array($date, $date));
+		$query = 'DELETE FROM '.cms_db_prefix().'module_jsavailability WHERE UNIX_TIMESTAMP(arrival) <= ? AND UNIX_TIMESTAMP(departure) >= ? AND ref_object = ?';
+		$db->Execute($query, array($date, $date, $this->GetPreference('current_object', -1)));
 	}
 	function smarty_modifier_str_pad($string, $length, $pad_string='', $pad_type='left'){
 		$pads = array('left'=>STR_PAD_LEFT, 'right'=>STR_PAD_RIGHT, 'both'=>STR_PAD_BOTH);
 		if(array_key_exists($pad_type, $pads))
 			return str_pad($string, $length ,$pad_string,$pads[$pad_type]);
 	}
-	function getEntries(){
+	function getEntries($object, $year){
 		$db =& cmsms()->GetDb();
 
-		$query = 'SELECT type, DATE(arrival) as arrival, DATE(departure) as departure FROM '.cms_db_prefix().'module_jsavailability ORDER BY id DESC';
+		$query = 'SELECT type, DATE(arrival) as arrival, DATE(departure) as departure FROM '.cms_db_prefix().'module_jsavailability WHERE ref_object = ? AND UNIX_TIMESTAMP(arrival) > UNIX_TIMESTAMP(01-01-?) AND UNIX_TIMESTAMP(departure) > UNIX_TIMESTAMP(31-12-?)';
 
-		$dbresult = $db->Execute($query);
+		$dbresult = $db->Execute($query, array($object, $year-1, $year+1));
 		$entries = array();
 		while ($dbresult && $row = $dbresult->FetchRow()){
 			$entry = new stdClass();
@@ -174,16 +178,16 @@ class JSAvailability extends CMSModule
 		}
 		return $entries;
 	}
-	function smartyConfig($admin = false){
+	function smartyConfig($admin = false, $year = -1, $object = -1){
 		$config = cmsms()->GetConfig();
 		$smarty = cmsms()->GetSmarty();
 
 		$append_start = $this->GetPreference('append_months_before', 2);;
 		$append_end = $this->GetPreference('append_months_after', 2);
-		$current_year = $admin ? $this->GetPreference('current_year', date('Y')) : date('Y');
-		$current_object = $admin ? $this->GetPreference('current_object', 1) : $params['object_id'];
+		$current_year = $admin ? $this->GetPreference('current_year', date('Y')) : ($year?$year:date('Y'));
+		$current_object = $admin ? $this->GetPreference('current_object', 1) : $object;
 
-		$smarty->assign('entries', $this->getEntries());
+		$smarty->assign('entries', $this->getEntries($current_object, current_year));
 
 		$years[$current_year-1] = $this->getYearInfo($current_year-1);
 		$years[$current_year] = $this->getYearInfo($current_year);
@@ -217,12 +221,20 @@ class JSAvailability extends CMSModule
 		$dbresult = $db->Execute('SELECT id, name FROM '.cms_db_prefix().'module_jsavailability_objects');
 		$dropdown = array();
 		while($dbresult && $row = $dbresult->FetchRow())
-			$dropdown[$row['name']] = $row['id'];
+			$dropdown[$row['id'].': '.$row['name']] = $row['id'];
 		return $dropdown;
 	}
 	function saveObject($id, $name){
 		$db = cmsms()->GetDb();
 		$db->Execute('UPDATE '.cms_db_prefix().'module_jsavailability_objects SET name = ? WHERE id = ?', array($name, $id));
+	}
+	function addObject(){
+		$db = cmsms()->GetDb();
+		$db->Execute('INSERT INTO '.cms_db_prefix().'module_jsavailability_objects (name) VALUES (?)', array($this->Lang('newobject')));
+	}
+	function deleteObject($object){
+		$db = cmsms()->GetDb();
+		$db->Execute('DELETE FROM '.cms_db_prefix().'module_jsavailability_objects WHERE id = ?', array($object));
 	}
 }
 ?>

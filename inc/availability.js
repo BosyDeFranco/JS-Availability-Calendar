@@ -33,8 +33,8 @@ function ajax_tab(usr_tab, container){
 		}
 	);
 }
-function reload(){
-	ajax_tab('calendartab', '#reloadArea');
+function reload(tab, container){
+	ajax_tab((tab?tab+'tab':'calendartab'), (container?container:'#reloadArea'));
 }
 function initYearSwitch(){
 	$('#' + CMS_FORM_ID + 'y').change(function(){
@@ -145,6 +145,21 @@ function saveObject(el){
 	ajax_function('saveObject', object_id+','+input.val(), true, function(){
 		$(el).replaceWith($(el).parent().data('original'));
 		container.removeClass('loading').html(input.val());
+		reload();
+	});
+}
+function addObject(){
+	ajax_function('addObject', '', true, function(){
+		reload('objects', '#reloadAreaO');
+		reload();
+	});
+}
+function deleteObject(el){
+	var container = $(el).parent().parent().children('.objectname');
+	var object_id = container.parent().children('td:first-child').html();
+	container.addClass('loading').append('<img src="' + CMS_INC_DIR + 'ajax-loader.gif" class="animation" />');
+	ajax_function('deleteObject', object_id, true, function(){
+		reload('objects', '#reloadAreaO');
 		reload();
 	});
 }

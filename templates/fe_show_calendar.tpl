@@ -1,4 +1,3 @@
-<link rel="stylesheet" type="text/css" href="{$incdir}styles.css" />
 <div id="calendar-view_c">
 <table>
 	{if $append_before > 0}
