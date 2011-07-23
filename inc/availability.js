@@ -37,12 +37,12 @@ function reload(tab, container){
 	ajax_tab((tab?tab+'tab':'calendartab'), (container?container:'#reloadArea'));
 }
 function initYearSwitch(){
-	$('#' + CMS_FORM_ID + 'y').change(function(){
+	$('#y').change(function(){
 		ajax_function('setCurrentYear', $(this).val(), true, reload);
    });
 }
 function initObjectSwitch(){
-	$('#' + CMS_FORM_ID + 'o').change(function(){
+	$('#o').change(function(){
 		ajax_function('setCurrentObject', $(this).val(), true, reload);
    });
 }

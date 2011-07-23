@@ -3,8 +3,6 @@
  * JSAvailability
  *
  * @author Jonathan Schmid
- * @modifiedby $LastChangedBy: foaly* $
- * @lastmodified $Date: 2011-03-13 22:42 +0200 $
  * TODO:
  * - icons in notifications
  * - loading hint
@@ -17,10 +15,11 @@ class JSAvailability extends CMSModule
 	var $yearinfo;
 	var $timestamps;
 
-	function JSAvailability(){
-		parent::CMSModule();
+	function __construct(){
+		parent::__construct();
+
 		setlocale(LC_ALL, cmsms()->siteprefs['frontendlang']);
-		$smarty =& cmsms()->GetSmarty();
+		$smarty = cmsms()->GetSmarty();
 		$smarty->register_modifier('js_str_pad', array($this, 'smarty_modifier_str_pad'));
 	}
 	function GetName(){
@@ -59,17 +58,14 @@ class JSAvailability extends CMSModule
 	function VisibleToAdminUser(){
 		return $this->CheckPermission('Use JSAvailability');
 	}
-	function GetDashboardOutput() {
-		return false;
-	}
-	function GetNotificationOutput($priority=2) {
-		return '';
-	}
 	function GetDependencies(){
 		return array();
 	}
 	function MinimumCMSVersion(){
-		return "1.9";
+		return "1.9.4.2";
+	}
+	function MaximumCMSVersion(){
+		return "1.10";
 	}
 	function SetParameters(){
 		$this->RegisterModulePlugin();
@@ -185,7 +181,7 @@ class JSAvailability extends CMSModule
 		$current_year = $admin ? $this->GetPreference('current_year', date('Y')) : ($year?$year:date('Y'));
 		$current_object = $admin ? $this->GetPreference('current_object', 1) : $object;
 
-		$smarty->assign('entries', $this->getEntries($current_object, current_year));
+		$smarty->assign('entries', $this->getEntries($current_object, $current_year));
 
 		$years[$current_year-1] = $this->getYearInfo($current_year-1);
 		$years[$current_year] = $this->getYearInfo($current_year);
@@ -203,15 +199,14 @@ class JSAvailability extends CMSModule
 
 		if($admin){
 			$smarty->assign('selectyearlabel', $this->Lang('selectyear'));
-			$smarty->assign('selectyear', $this->CreateInputDropdown($id, 'y', $this->createYearDropdown(), -1, (string)$current_year, 'id="'.$id.'y"'));
+			$smarty->assign('selectyear', $this->CreateInputDropdown('', 'y', $this->createYearDropdown(), -1, (string)$current_year, 'id="y"'));
 			$smarty->assign('selectobjectlabel', $this->Lang('selectobject'));
-			$smarty->assign('selectobject', $this->CreateInputDropdown($id, 'o', $this->createObjectsDropdown(), -1, (string)$current_object, 'id="'.$id.'o"'));
+			$smarty->assign('selectobject', $this->CreateInputDropdown('', 'o', $this->createObjectsDropdown(), -1, (string)$current_object, 'id="o"'));
 
 			$smarty->assign('admindir', $config['root_url'].'/'.$config['admin_dir']);
 			$smarty->assign('userkey', $_SESSION[CMS_USER_KEY]);
-			$smarty->assign('formid', $id);
 			$smarty->assign('selectyearlabel', $this->Lang('selectyear'));
-			$smarty->assign('selectyear', $this->CreateInputDropdown($id, 'y', $this->createYearDropdown(), -1, (string)$current_year, 'id="'.$id.'y"'));
+			$smarty->assign('selectyear', $this->CreateInputDropdown('', 'y', $this->createYearDropdown(), -1, (string)$current_year, 'id="y"'));
 		}
 	}
 	function createObjectsDropdown(){
