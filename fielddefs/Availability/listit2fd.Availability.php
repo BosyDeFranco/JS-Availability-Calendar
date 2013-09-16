@@ -49,6 +49,7 @@ EOT;
 
 		$lang = CmsNlsOperations::get_language_info(CmsNlsOperations::get_current_language());
 		$smarty->assign('cms_lang', $lang->isocode());
+		$smarty->assign('events', $this->GetValue(self::TYPE_STRING));
 
 		return parent::RenderInput($id, $returnid);
 	}

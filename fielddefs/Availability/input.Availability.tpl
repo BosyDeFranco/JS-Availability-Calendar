@@ -1,11 +1,12 @@
 <div class="pageoverflow">
 	<p class="pagetext">{$fielddef->GetName()}{if $fielddef->IsRequired()}*{/if}:</p>
-	<div id="JSAvailability-{$fielddef->GetId()}" class="pageinput jsavailability">
+	<input type="hidden" name="{$actionid}customfield[{$fielddef->GetId()}]"  id="jsavailability-{$fielddef->GetId()}-value" value="{$events|escape:'htmlall'}" />
+	<div id="jsavailability-{$fielddef->GetId()}" class="pageinput jsavailability">
 		<div class="previous-button">&lsaquo;</div>
 		<div class="calendar-month"></div>
 		<div class="calendar-month"></div>
 		<div class="calendar-month">
-			<script id="JSAvailability-{$fielddef->GetId()}-template" type="text/template">
+			<script id="jsavailability-{$fielddef->GetId()}-template" type="text/template">
 			<div class="controls">
 				<div class="month"><%= month %> <%= year %></div>
 			</div>
