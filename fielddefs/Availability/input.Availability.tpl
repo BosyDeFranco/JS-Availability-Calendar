@@ -7,7 +7,7 @@
 		<div class="calendar-month">
 			<script id="JSAvailability-{$fielddef->GetId()}-template" type="text/template">
 			<div class="controls">
-				<div class="month"><%= month %></div>
+				<div class="month"><%= month %> <%= year %></div>
 			</div>
 			<div class="days-container">
 				<div class="days">
@@ -18,10 +18,24 @@
 					</div>
 					<div class="row">
 					<% _.each(days, function(day, n) { %>
+					<%
+						var extraClasses = '';
+						if((day.events.length > 0 && day.events[0].isStart) || (day.events[1] !== undefined && day.events[1].isStart)) {
+							extraClasses += ' event-start';
+						}
+						if((day.events.length > 0 && day.events[0].isEnd) || (day.events[1] !== undefined && day.events[1].isEnd)) {
+							extraClasses += ' event-end';
+						}
+					%>
 						<% if(n % 7 == 0 && n > 0) { %>
 						</div><div class="row">
 						<% } %>
-						<div class="<%= day.classes %>" id="<%= day.id %>"><%= day.day %></div>
+						<div
+							class="<%= day.classes %><%= extraClasses %>"
+							id="<%= day.id %>"
+						>
+							<%= day.day %>
+						</div>
 					<% }); %>
 					</div>
 				</div>

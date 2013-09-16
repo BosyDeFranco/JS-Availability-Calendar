@@ -66,6 +66,14 @@
 	cursor: pointer;
 	overflow: hidden;
 }
+.clndr .day.event,
+.clndr .day.event-start.event-end {
+	background-color: #edeff4;
+	color: #212121;
+}
+.clndr .day.event-start.event-end {
+	background-image: url(images/icon-car.png);
+}
 .clndr .day.event-start {
 	text-indent: -999px;
 	background-image: url(images/icon-car.png), -moz-linear-gradient(left, #ddf9cf 0%, #ddf9cf 50%, #edeff4 50%, #edeff4 100%);
