@@ -35,12 +35,22 @@ class listit2fd_Availability extends ListIt2FielddefBase
 	}
 
 	public function GetHeaderHTML()
-	{
+	{	
 		$tmpl = <<<EOT
 <link type="text/css" rel="stylesheet" href="{$this->GetURLPath()}/listit2fd-availability.css" />
 <script type="text/javascript" src="{$this->GetURLPath()}/listit2fd-availability.js"></script>
 EOT;
 		return $tmpl;
+	}
+
+	public function RenderInput($id, $returnid)
+	{
+		$smarty = cmsms()->GetSmarty();
+
+		$lang = CmsNlsOperations::get_language_info(CmsNlsOperations::get_current_language());
+		$smarty->assign('cms_lang', $lang->isocode());
+
+		return parent::RenderInput($id, $returnid);
 	}
 }
 ?>

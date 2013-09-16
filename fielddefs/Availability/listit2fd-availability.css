@@ -1,0 +1,59 @@
+.jsavailability {
+	position: relative;
+}
+.jsavailability .previous-button,
+.jsavailability .next-button {
+	position: absolute;
+	top: 0;
+	padding: 0 5px; 
+	font-size: 5em;
+	line-height: 0.4em;
+	color: #666;
+	cursor: pointer;
+}
+.jsavailability .previous-button {
+	left: -5px;
+}
+.jsavailability .next-button {
+	right: -5px;
+}
+.calendar-month {
+	display: inline-block;
+	width: 30.3%;
+	margin: 0 1.4%;
+}
+.clndr {
+	text-align: center;
+}
+.clndr .controls {
+	font-size: 1.166em;
+}
+.clndr .controls .month {
+	display: block;
+	padding: 5px 0;
+	text-align: center;
+	letter-spacing: 1px;
+}
+.clndr .days {
+	display: table;
+	width: 100%;
+	border-collapse: collapse;
+}
+.clndr .headers {
+	display: table-row;
+	border: 1px solid #dcdde0;
+}
+.clndr .row {
+	display: table-row;
+}
+.clndr .day-header,
+.clndr .day,
+.clndr .empty {
+	display: table-cell;
+	width: 14.285%;
+	padding: 5px 0;
+}
+.clndr .day,
+.clndr .empty {
+	border: 1px solid #dcdde0;
+}

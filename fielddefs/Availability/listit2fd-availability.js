@@ -18,10 +18,33 @@ case 3:return"[W zeszłą środę o] LT";case 6:return"[W zeszłą sobotę o] LT
 
 /*! JSAvailability v0.10 2013-09-16 */
 var JSAvailability = (function ($) {
-	
+	var calendars = [],
+		changeMonth = function (e) {
+			switch(e.target.className) {
+				case 'previous-button':
+					$.each(calendars, function () {
+						this.back();
+					});
+					break;
+				case 'next-button':
+					$.each(calendars, function () {
+						this.forward();
+					});
+					break;
+			}
+		};
 	return {
-		init: function (id) {
-			$('#JSAvailability-' + id).clndr();
+		init: function (id, lang) {
+			moment.lang(lang);
+			$('#JSAvailability-' + id + ' > .calendar-month').each(function(index, month) {
+				var calendar = $(month).clndr({
+					template: $('#JSAvailability-' + id + '-template').html(),
+					weekOffset: 1,
+					startWithMonth: moment().add('month', index)
+				});
+				calendars.push(calendar);
+			});
+			$('.jsavailability .previous-button, .jsavailability .next-button').click(changeMonth);
 		}
 	};
 }(jQuery));
