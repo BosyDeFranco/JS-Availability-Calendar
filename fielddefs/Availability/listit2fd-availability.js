@@ -82,7 +82,7 @@ var JSAvailability = (function ($) {
 			}
 		};
 	return {
-		init: function (id, lang) {
+		backend: function (id, lang) {
 			moment.lang(lang);
 			input = $('#jsavailability-'+id+'-value').get(0);
 			if(input.value.length > 0) {
@@ -97,6 +97,20 @@ var JSAvailability = (function ($) {
 						clickEvents: {
 							click: changeEvent
 						}
+					});
+				calendars.push(calendar);
+			});
+			$('.jsavailability .previous-button, .jsavailability .next-button').click(changeMonth);
+		},
+		frontend: function (id, lang, events) {
+			moment.lang(lang);
+			events = JSON.parse(events);
+			$('#jsavailability-'+id+' > .calendar-month').each(function (index, month) {
+				var calendar = $(month).clndr({
+						template: $('#jsavailability-'+id+'-template').html(),
+						weekOffset: 1,
+						startWithMonth: moment().add('month', index),
+						events: events,
 					});
 				calendars.push(calendar);
 			});

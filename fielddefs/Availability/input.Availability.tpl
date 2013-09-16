@@ -47,6 +47,6 @@
 	</div>
 </div>
 <script>jQuery(function () {
-	JSAvailability.init('{$fielddef->GetId()}', '{$cms_lang}');
+	JSAvailability.backend('{$fielddef->GetId()}', '{$cms_lang}');
 });
 </script>

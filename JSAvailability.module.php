@@ -63,9 +63,44 @@ class JSAvailability extends CMSModule {
 		return 'hi@jonathanschmid.de';
 	}
 
+	public function GetHelp()
+	{
+		$smarty = cmsms()->GetSmarty();
+		$smarty->assign('mod', $this);
+
+		return $this->ProcessTemplate('help.tpl');
+	}
+
 	public function GetChangeLog()
 	{
 		return @file_get_contents(dirname(__FILE__).'/changelog.html');
+	}
+
+	public function VisibleToAdminUser()
+	{
+		return false;
+	}
+
+	public function IsPluginModule()
+	{
+		return true;
+	}
+
+	public function LazyLoadFrontend() 
+	{
+		return true;
+	}
+
+	public function InitializeAdmin() {
+		$this->CreateParameter('field', '', $this->Lang('help_param_field'));
+	}
+
+	public function InitializeFrontend()
+	{
+		$this->RegisterModulePlugin();
+		$this->RestrictUnknownParams();
+
+		$this->SetParameterType('field', CLEAN_NONE);
 	}
 }
 ?>
