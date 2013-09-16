@@ -1,0 +1,1 @@
+JSAvailability field def
