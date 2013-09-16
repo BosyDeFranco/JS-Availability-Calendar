@@ -56,4 +56,31 @@
 .clndr .day,
 .clndr .empty {
 	border: 1px solid #dcdde0;
+	font-weight: bold;
+}
+.clndr .day {
+	background-color: #ddf9cf;
+	background-position: center center;
+	background-repeat: no-repeat;
+	color: #436F00;
+	cursor: pointer;
+	overflow: hidden;
+}
+.clndr .day.event-start {
+	text-indent: -999px;
+	background-image: url(images/icon-car.png), -moz-linear-gradient(left, #ddf9cf 0%, #ddf9cf 50%, #edeff4 50%, #edeff4 100%);
+	background-image: url(images/icon-car.png), -webkit-gradient(linear, left top, right top, color-stop(0%,#ddf9cf), color-stop(50%,#ddf9cf), color-stop(50%,#edeff4), color-stop(100%,#edeff4));
+	background-image: url(images/icon-car.png), -webkit-linear-gradient(left, #ddf9cf 0%, #ddf9cf 50%, #edeff4 50%, #edeff4 100%);
+	background-image: url(images/icon-car.png), -o-linear-gradient(left, #ddf9cf 0%, #ddf9cf 50%, #edeff4 50%, #edeff4 100%);
+	background-image: url(images/icon-car.png), -ms-linear-gradient(left, #ddf9cf 0%, #ddf9cf 50%, #edeff4 50%, #edeff4 100%);
+	background-image: url(images/icon-car.png), linear-gradient(to right, #ddf9cf 0%, #ddf9cf 50%, #edeff4 50%, #edeff4 100%);
+}
+.clndr .day.event-end {
+	text-indent: -999px;
+	background-image: url(images/icon-car.png), -moz-linear-gradient(left, #edeff4 0%, #edeff4 50%, #ddf9cf 50%, #ddf9cf 100%);
+	background-image: url(images/icon-car.png), -webkit-gradient(linear, left top, right top, color-stop(0%,#edeff4), color-stop(50%,#edeff4), color-stop(50%,#ddf9cf), color-stop(100%,#ddf9cf));
+	background-image: url(images/icon-car.png), -webkit-linear-gradient(left, #edeff4 0%, #edeff4 50%, #ddf9cf 50%, #ddf9cf 100%);
+	background-image: url(images/icon-car.png), -o-linear-gradient(left, #edeff4 0%, #edeff4 50%, #ddf9cf 50%, #ddf9cf 100%);
+	background-image: url(images/icon-car.png), -ms-linear-gradient(left, #edeff4 0%, #edeff4 50%, #ddf9cf 50%, #ddf9cf 100%);
+	background-image: url(images/icon-car.png), linear-gradient(to right, #edeff4 0%, #edeff4 50%, #ddf9cf 50%, #ddf9cf 100%);
 }

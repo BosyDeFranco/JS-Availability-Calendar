@@ -19,6 +19,8 @@ case 3:return"[W zeszłą środę o] LT";case 6:return"[W zeszłą sobotę o] LT
 /*! JSAvailability v0.10 2013-09-16 */
 var JSAvailability = (function ($) {
 	var calendars = [],
+		newEvent = null,
+		events = [],
 		changeMonth = function (e) {
 			switch(e.target.className) {
 				case 'previous-button':
@@ -32,16 +34,65 @@ var JSAvailability = (function ($) {
 					});
 					break;
 			}
+		},
+		updateEvents = function () {
+			$.each(calendars, function() {
+				this.setEvents(events);
+			});
+		},
+		eventStart = function (target) {
+			if(target.events.length > 0) {
+				if(confirm('Do you wish to remove this event?')) {
+					// remove event
+					updateEvents();
+				}
+			} else {
+				newEvent = target;
+				$(newEvent.element).addClass('event-start');
+			}
+		},
+		eventEnd = function (target) {
+			var date = newEvent.date;
+			if(target.date - newEvent.date <= 0 || target.events.length > 0) {
+				$(newEvent.element).removeClass('event-start');
+				newEvent = null;
+				return false;
+			}
+			$(target.element).addClass('event-end');
+			do {
+				events.push({
+					date: newEvent.date.format('YYYY-MM-DD'),
+					isStart: date == newEvent.date,
+					isEnd: date == target.date
+				});
+				date = date.add('day', 1);
+			} while(target.date - newEvent.date > 0);
+			newEvent = null;
+			updateEvents();
+		},
+		changeEvent = function (target) {
+			if(target.date === null) {
+				return false;
+			}
+			if(newEvent) {
+				eventEnd(target);
+			} else {
+				eventStart(target);
+			}
 		};
 	return {
 		init: function (id, lang) {
 			moment.lang(lang);
-			$('#JSAvailability-' + id + ' > .calendar-month').each(function(index, month) {
+			$('#JSAvailability-' + id + ' > .calendar-month').each(function (index, month) {
 				var calendar = $(month).clndr({
-					template: $('#JSAvailability-' + id + '-template').html(),
-					weekOffset: 1,
-					startWithMonth: moment().add('month', index)
-				});
+						template: $('#JSAvailability-' + id + '-template').html(),
+						weekOffset: 1,
+						startWithMonth: moment().add('month', index),
+						event: events,
+						clickEvents: {
+							click: changeEvent
+						}
+					});
 				calendars.push(calendar);
 			});
 			$('.jsavailability .previous-button, .jsavailability .next-button').click(changeMonth);
