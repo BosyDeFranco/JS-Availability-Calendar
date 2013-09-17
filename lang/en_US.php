@@ -8,7 +8,7 @@ $lang['team'] = 'Team';
 $lang['help_general'] = '<h3>General Info</h3>      
     <p>JSAvailability provides a field type for the <a href="http://dev.cmsmadesimple.org/projects/listit2" target="_blank">ListItExtended module</a> to allow the management of availability of items.</p>
     <h3>ListIt Template</h3>
-    <p>To output the calendar on the ListIt detail page simply insert this to the end of your detail template and replace the field id:</p>';
+    <p>To output the calendar on the ListIt detail page simply insert this to the end of your detail template and replace <em>fielddef_alias</em> by the alias of your field definition:</p>';
 
 $lang['help_about'] = <<<EOT
 	<h3>About</h3>

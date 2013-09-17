@@ -17,7 +17,7 @@
 <div id="page_content">
     <div id="general_c">
         {$mod->Lang('help_general')}
-        <pre><code>{ldelim}JSAvailability field=$item->fielddefs[1]{rdelim}</code></pre>
+        <pre><code>{ldelim}JSAvailability field=$item->fielddef_alias{rdelim}</code></pre>
     </div>
 	<div id="about_c">
 		{$mod->Lang('help_about')}
