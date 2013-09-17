@@ -18,6 +18,7 @@ case 3:return"[W zeszłą środę o] LT";case 6:return"[W zeszłą sobotę o] LT
 
 /*! JSAvailability v0.10 2013-09-16 */
 var JSAvailability = (function ($) {
+	"use strict";
 	var calendars = [],
 		newEvent = null,
 		events = [],
@@ -43,7 +44,7 @@ var JSAvailability = (function ($) {
 			input.value = JSON.stringify(events);
 		},
 		eventStart = function (target) {
-			if(target.events.length > 0 && target.events[0].isEnd == false) {
+			if(target.events.length > 0 && target.events[0].isEnd === false) {
 				if(confirm('Do you wish to remove this event?')) {
 					// remove event
 					updateEvents();
@@ -55,7 +56,7 @@ var JSAvailability = (function ($) {
 		},
 		eventEnd = function (target) {
 			var date = newEvent.date.clone();
-			if(target.date - newEvent.date <= 0 || (target.events.length > 0 && target.events[0].isStart == false)) {
+			if(target.date - newEvent.date <= 0 || (target.events.length > 0 && target.events[0].isStart === false)) {
 				$(newEvent.element).removeClass('event-start');
 				newEvent = null;
 				return false;
@@ -63,8 +64,8 @@ var JSAvailability = (function ($) {
 			do {
 				events.push({
 					date: date.format('YYYY-MM-DD'),
-					isStart: date.format('YYYYMMDD') == newEvent.date.format('YYYYMMDD'),
-					isEnd: date.format('YYYYMMDD') == target.date.format('YYYYMMDD')
+					isStart: date.format('YYYYMMDD') === newEvent.date.format('YYYYMMDD'),
+					isEnd: date.format('YYYYMMDD') === target.date.format('YYYYMMDD')
 				});
 				date.add('days', 1);
 			} while(target.date - date >= 0);
