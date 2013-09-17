@@ -48,6 +48,6 @@
 {cms_lang_info assign='nls'}
 <script>
 jQuery(function () {ldelim}
-	JSAvailability.frontend('{$field->GetId()}', '{$nls->isocode()}', '{$field->value}');
+	JSAvailability.frontend('{$field->GetId()}', '{$nls->isocode()}', '{$value|json_encode}');
 {rdelim});
 </script>

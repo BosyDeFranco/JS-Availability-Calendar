@@ -46,12 +46,15 @@ EOT;
 	public function RenderInput($id, $returnid)
 	{
 		$smarty = cmsms()->GetSmarty();
-
 		$lang = CmsNlsOperations::get_language_info(CmsNlsOperations::get_current_language());
 		$smarty->assign('cms_lang', $lang->isocode());
-		$smarty->assign('events', $this->GetValue(self::TYPE_STRING));
-
+		$smarty->assign('events', $this->GetValue(self::TYPE_ARRAY));
 		return parent::RenderInput($id, $returnid);
+	}
+
+	public function RenderForAdminListing($id, $returnid)
+	{
+		return $this->ModLang('occupancies', count($this->GetValue(self::TYPE_ARRAY)));
 	}
 }
 ?>

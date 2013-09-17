@@ -19,10 +19,11 @@ case 3:return"[W zeszłą środę o] LT";case 6:return"[W zeszłą sobotę o] LT
 /*! JSAvailability v0.10 2013-09-16 */
 var JSAvailability = (function ($) {
 	"use strict";
-	var calendars = [],
-		newEvent = null,
+	var $container = null,
+		calendars = [],
 		events = [],
-		input = null,
+		newEvent = null,
+		$sampleInput = null,
 		changeMonth = function (e) {
 			switch(e.target.className) {
 				case 'previous-button':
@@ -38,10 +39,15 @@ var JSAvailability = (function ($) {
 			}
 		},
 		updateEvents = function () {
-			$.each(calendars, function() {
+			$.each(calendars, function () {
 				this.setEvents(events);
 			});
-			input.value = JSON.stringify(events);
+			$container.find('input[type=hidden]').remove();
+			$.each(events, function () {
+				var $input = $sampleInput.clone();
+				$input.attr('value', JSON.stringify(this));
+				$container.append($input);
+			});
 		},
 		findEvent = function (date) {
 			return $.grep(events, function (event, index) {
@@ -72,10 +78,13 @@ var JSAvailability = (function ($) {
 						isStart: date.format('YYYYMMDD') === newEvent.date.format('YYYYMMDD'),
 						isEnd: date.format('YYYYMMDD') === target.date.format('YYYYMMDD')
 					});
-				} else if(events[existingIndex].isStart || events[existingIndex].isEnd) {
+				} else {
 					existingIndex = jQuery.inArray(event, events);
-					events[existingIndex].isStart = true;
-					events[existingIndex].isEnd = true;
+					console.log((events[existingIndex].isStart || events[existingIndex].isEnd));
+					if(events[existingIndex].isStart || events[existingIndex].isEnd) {
+						events[existingIndex].isStart = true;
+						events[existingIndex].isEnd = true;
+					}
 				}
 				date.add('days', 1);
 			} while(target.date - date >= 0);
@@ -104,8 +113,9 @@ var JSAvailability = (function ($) {
 				do {
 					date.add('days', 1);
 					event = findEvent(date);
+					index = jQuery.inArray(event, events);
 					if(event.isStart == false) {
-						events.splice(jQuery.inArray(event, events), 1);
+						events.splice(index, 1);
 					} else {
 						events[index].isEnd = false;
 						break;
@@ -127,13 +137,18 @@ var JSAvailability = (function ($) {
 			}
 		};
 	return {
-		backend: function (id, lang) {
+		backend: function (id, actionid, lang) {
+			var $inputs = null;
 			moment.lang(lang);
-			input = $('#jsavailability-'+id+'-value').get(0);
-			if(input.value.length > 0) {
-				events = JSON.parse(input.value);
+			$container = $('#jsavailability-'+id);
+			$inputs = $container.find('input[type=hidden]');
+			if($inputs.length > 0) {
+				$inputs.each(function (index, $input) {
+					events.push(JSON.parse($input.value));
+				});
 			}
-			$('#jsavailability-'+id+' > .calendar-month').each(function (index, month) {
+			$sampleInput = $('<input type="hidden" name="'+actionid+'customfield['+id+'][]" />');
+			$container.find(' > .calendar-month').each(function (index, month) {
 				var calendar = $(month).clndr({
 						template: $('#jsavailability-'+id+'-template').html(),
 						weekOffset: 1,
@@ -149,6 +164,7 @@ var JSAvailability = (function ($) {
 		},
 		frontend: function (id, lang, events) {
 			moment.lang(lang);
+			console.log(events);
 			events = JSON.parse(events);
 			$('#jsavailability-'+id+' > .calendar-month').each(function (index, month) {
 				var calendar = $(month).clndr({

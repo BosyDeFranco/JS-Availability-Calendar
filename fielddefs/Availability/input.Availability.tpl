@@ -1,6 +1,5 @@
 <div class="pageoverflow">
 	<p class="pagetext">{$fielddef->GetName()}{if $fielddef->IsRequired()}*{/if}:</p>
-	<input type="hidden" name="{$actionid}customfield[{$fielddef->GetId()}]"  id="jsavailability-{$fielddef->GetId()}-value" value="{$events|escape:'htmlall'}" />
 	<div id="jsavailability-{$fielddef->GetId()}" class="pageinput jsavailability">
 		<div class="previous-button">&lsaquo;</div>
 		<div class="calendar-month"></div>
@@ -44,9 +43,12 @@
 			</script>
 		</div>
 		<div class="next-button">&rsaquo;</div>
+		{foreach from=$events item=event}
+		<input type="hidden" name="{$actionid}customfield[{$fielddef->GetId()}][]" value="{$event|escape:'htmlall'}" />
+		{/foreach}
 	</div>
 </div>
 <script>jQuery(function () {
-	JSAvailability.backend('{$fielddef->GetId()}', '{$cms_lang}');
+	JSAvailability.backend('{$fielddef->GetId()}', '{$actionid}', '{$cms_lang}');
 });
 </script>

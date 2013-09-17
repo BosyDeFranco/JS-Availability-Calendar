@@ -1,6 +1,7 @@
 <?php
 $lang['module_friendlyname'] = 'JSAvailability';
 $lang['module_description'] = 'ListItExtended Cross module / Availability field definition';
+$lang['occupancies'] = '%u days occupied';
 
 $lang['general'] = 'General';
 $lang['about'] = 'About';
