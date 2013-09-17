@@ -43,23 +43,40 @@ var JSAvailability = (function ($) {
 			});
 			input.value = JSON.stringify(events);
 		},
+		findEvent = function (date) {
+			return $.grep(events, function (event, index) {
+				if(event.date == date.format('YYYY-MM-DD')) {
+					return true;
+				}
+				return false;
+			})[0];
+		},
 		eventStart = function (target) {
 			 newEvent = target;
 			$(newEvent.element).addClass('event-start');
 		},
 		eventEnd = function (target) {
-			var date = newEvent.date.clone();
+			var date = newEvent.date.clone(),
+				existing = null,
+				existingIndex = null;
 			if(target.date - newEvent.date <= 0 || (target.events.length > 0 && target.events[0].isStart === false)) {
 				$(newEvent.element).removeClass('event-start');
 				newEvent = null;
 				return false;
 			}
 			do {
-				events.push({
-					date: date.format('YYYY-MM-DD'),
-					isStart: date.format('YYYYMMDD') === newEvent.date.format('YYYYMMDD'),
-					isEnd: date.format('YYYYMMDD') === target.date.format('YYYYMMDD')
-				});
+				existing = findEvent(date);
+				if(typeof extisting === 'undefined') {
+					events.push({
+						date: date.format('YYYY-MM-DD'),
+						isStart: date.format('YYYYMMDD') === newEvent.date.format('YYYYMMDD'),
+						isEnd: date.format('YYYYMMDD') === target.date.format('YYYYMMDD')
+					});
+				} else if(events[existingIndex].isStart || events[existingIndex].isEnd) {
+					existingIndex = jQuery.inArray(event, events);
+					events[existingIndex].isStart = true;
+					events[existingIndex].isEnd = true;
+				}
 				date.add('days', 1);
 			} while(target.date - date >= 0);
 			newEvent = null;
@@ -67,30 +84,32 @@ var JSAvailability = (function ($) {
 		},
 		eventRemove = function (target) {
 			var date = target.date.clone(),
-				event = null;
+				event = null,
+				index = null;
 			if(confirm('Do you wish to remove this event?')) {
 				// find start
 				do {
-					event = $.grep(events, function (event, index) {
-						if(event.date == date.format('YYYY-MM-DD')) {
-							return true;
-						}
-						return false;
-					})[0];
-					events.splice(jQuery.inArray(event, events), 1);
+					event = findEvent(date);
+					index = jQuery.inArray(event, events);
+					if(event.isEnd == false) {
+						events.splice(index, 1);
+					} else {
+						events[index].isStart = false;
+						break;
+					}
 					date.subtract('days', 1);
 				} while(event.isStart === false);
 				// find end
 				date = target.date.clone();
 				do {
 					date.add('days', 1);
-					event = $.grep(events, function (event, index) {
-						if(event.date == date.format('YYYY-MM-DD')) {
-							return true;
-						}
-						return false;
-					})[0];
-					events.splice(jQuery.inArray(event, events), 1);
+					event = findEvent(date);
+					if(event.isStart == false) {
+						events.splice(jQuery.inArray(event, events), 1);
+					} else {
+						events[index].isEnd = false;
+						break;
+					}
 				} while(event.isEnd === false);
 				updateEvents();
 			}

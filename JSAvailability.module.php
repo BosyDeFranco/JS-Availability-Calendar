@@ -43,9 +43,14 @@ class JSAvailability extends CMSModule {
 		return $this->Lang('module_description');
 	}
 
+	public function GetDependencies()
+	{
+		return array('ListIt2' => '1.4');
+	}
+
 	public function GetVersion()
 	{
-		return '0.10';
+		return '0.10.1';
 	}
 
 	public function MinimumCMSVersion()
