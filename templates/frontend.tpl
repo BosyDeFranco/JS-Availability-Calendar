@@ -45,8 +45,9 @@
 </div>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script src="{$field->GetURLPath()}/listit2fd-availability.js"></script>
+{cms_lang_info assign='nls'}
 <script>
 jQuery(function () {ldelim}
-	JSAvailability.frontend('{$field->GetId()}', 'de', '{$field->value}');
+	JSAvailability.frontend('{$field->GetId()}', '{$nls->isocode()}', '{$field->value}');
 {rdelim});
 </script>

@@ -44,15 +44,8 @@ var JSAvailability = (function ($) {
 			input.value = JSON.stringify(events);
 		},
 		eventStart = function (target) {
-			if(target.events.length > 0 && target.events[0].isEnd === false) {
-				if(confirm('Do you wish to remove this event?')) {
-					// remove event
-					updateEvents();
-				}
-			} else {
-				newEvent = target;
-				$(newEvent.element).addClass('event-start');
-			}
+			 newEvent = target;
+			$(newEvent.element).addClass('event-start');
 		},
 		eventEnd = function (target) {
 			var date = newEvent.date.clone();
@@ -72,12 +65,44 @@ var JSAvailability = (function ($) {
 			newEvent = null;
 			updateEvents();
 		},
+		eventRemove = function (target) {
+			var date = target.date.clone(),
+				event = null;
+			if(confirm('Do you wish to remove this event?')) {
+				// find start
+				do {
+					event = $.grep(events, function (event, index) {
+						if(event.date == date.format('YYYY-MM-DD')) {
+							return true;
+						}
+						return false;
+					})[0];
+					events.splice(jQuery.inArray(event, events), 1);
+					date.subtract('days', 1);
+				} while(event.isStart === false);
+				// find end
+				date = target.date.clone();
+				do {
+					date.add('days', 1);
+					event = $.grep(events, function (event, index) {
+						if(event.date == date.format('YYYY-MM-DD')) {
+							return true;
+						}
+						return false;
+					})[0];
+					events.splice(jQuery.inArray(event, events), 1);
+				} while(event.isEnd === false);
+				updateEvents();
+			}
+		},
 		changeEvent = function (target) {
 			if(target.date === null) {
 				return false;
 			}
 			if(newEvent) {
 				eventEnd(target);
+			} else if(target.events.length > 0 && target.events[0].isEnd === false) {
+				eventRemove(target);
 			} else {
 				eventStart(target);
 			}
