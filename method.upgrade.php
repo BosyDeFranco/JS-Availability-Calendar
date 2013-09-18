@@ -28,11 +28,12 @@
 
 if (!is_object(cmsms())) exit;
 
-if( version_compare($oldversion, '0.10.1') < 0 )
+if( version_compare($oldversion, '0.10.2') < 0 )
 {
 	foreach(cmsms()->GetModuleInstance('ListIt2')->ListModules() as $li)
 	{
 		$alias = cmsms()->GetModuleInstance($li->module_name)->_GetModuleAlias();
+		// remove duplicate events
 		$sql = 'SELECT b.item_id, b.fielddef_id, b.value
 			FROM  '.cms_db_prefix().'module_'.$alias.'_fielddef a, '.cms_db_prefix().'module_'.$alias.'_fieldval b
 			WHERE a.fielddef_id = b.fielddef_id AND a.type = \'Availability\'';
@@ -69,5 +70,21 @@ if( version_compare($oldversion, '0.10.1') < 0 )
 			}
 			$db->Execute($sql, array(json_encode(array_values($events)), $dataset['item_id'], $dataset['fielddef_id']));
 		}
+		// split data into one dataset per event
+		$sql = 'SELECT b.item_id, b.fielddef_id, b.value
+			FROM  '.cms_db_prefix().'module_'.$alias.'_fielddef a, '.cms_db_prefix().'module_'.$alias.'_fieldval b
+			WHERE a.fielddef_id = b.fielddef_id AND a.type = \'Availability\'';
+		$result = $db->GetArray($sql);
+		$db->Execute('DELETE FROM '.cms_db_prefix().'module_'.$alias.'_fieldval WHERE item_id = ? AND fielddef_id = ?',
+			array($result[0]['item_id'], $result[0]['fielddef_id']));
+		$sql = 'INSERT INTO '.cms_db_prefix().'module_'.$alias.'_fieldval (item_id, fielddef_id, value_index, value) VALUES (?, ?, ?, ?)';
+		foreach($result as $dataset)
+		{
+			$events = array_values(json_decode($dataset['value']));
+			foreach($events as $n => $event)
+			{
+				$db->Execute($sql, array($dataset['item_id'], $dataset['fielddef_id'], $n, json_encode($event)));
+			}
+		}
 	}
-} // end of 0.10 -> 0.10.1 upgrade*/
+} // end of 0.10.1 -> 0.10.2 upgrade*/

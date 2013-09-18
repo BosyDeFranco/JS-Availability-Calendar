@@ -50,7 +50,7 @@ class JSAvailability extends CMSModule {
 
 	public function GetVersion()
 	{
-		return '0.10.1';
+		return '0.10.2';
 	}
 
 	public function MinimumCMSVersion()
@@ -96,7 +96,8 @@ class JSAvailability extends CMSModule {
 		return true;
 	}
 
-	public function InitializeAdmin() {
+	public function InitializeAdmin()
+	{
 		$this->CreateParameter('field', '', $this->Lang('help_param_field'));
 	}
 
