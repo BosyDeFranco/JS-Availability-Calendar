@@ -72,15 +72,14 @@ var JSAvailability = (function ($) {
 			}
 			do {
 				existing = findEvent(date);
-				if(typeof extisting === 'undefined') {
+				if(typeof existing === 'undefined') {
 					events.push({
 						date: date.format('YYYY-MM-DD'),
 						isStart: date.format('YYYYMMDD') === newEvent.date.format('YYYYMMDD'),
 						isEnd: date.format('YYYYMMDD') === target.date.format('YYYYMMDD')
 					});
 				} else {
-					existingIndex = jQuery.inArray(event, events);
-					console.log((events[existingIndex].isStart || events[existingIndex].isEnd));
+					existingIndex = jQuery.inArray(existing, events);
 					if(events[existingIndex].isStart || events[existingIndex].isEnd) {
 						events[existingIndex].isStart = true;
 						events[existingIndex].isEnd = true;
@@ -164,7 +163,6 @@ var JSAvailability = (function ($) {
 		},
 		frontend: function (id, lang, events) {
 			moment.lang(lang);
-			console.log(events);
 			events = JSON.parse(events);
 			$('#jsavailability-'+id+' > .calendar-month').each(function (index, month) {
 				var calendar = $(month).clndr({
