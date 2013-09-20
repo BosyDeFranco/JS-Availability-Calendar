@@ -5,6 +5,7 @@ if(get_class($params['field']) !== 'listit2fd_Availability') {
 
 $smarty = cmsms()->GetSmarty();
 $smarty->assign('field', $params['field']);
+$smarty->assign('mod', $this);
 
 $values = $params['field']->GetValue(listit2fd_Availability::TYPE_ARRAY);
 // TODO: make this working with array_walk
