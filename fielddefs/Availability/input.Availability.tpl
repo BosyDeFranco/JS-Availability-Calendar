@@ -47,6 +47,10 @@
 		<input type="hidden" name="{$actionid}customfield[{$fielddef->GetId()}][]" value="{$event|escape:'htmlall'}" />
 		{/foreach}
 	</div>
+	<div class="jsavailability-legend">
+		<div class="day">31</div><span>{$fielddef->ModLang('available')}</span>
+		<div class="day event">31</div><span>{$fielddef->ModLang('unavailable')}</span>
+	</div>
 </div>
 <script>jQuery(function () {
 	JSAvailability.backend('{$fielddef->GetId()}', '{$actionid}', '{$cms_lang}');
