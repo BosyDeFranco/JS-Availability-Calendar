@@ -43,6 +43,10 @@
 	</div>
 	<div class="next-button">&rsaquo;</div>
 </div>
+<div class="jsavailability-legend">
+	<div class="day">31</div><span>Available</span>
+	<div class="day event">31</div><span>Unavailable</span>
+</div>
 <!--[if lt IE 9]>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <![endif]-->

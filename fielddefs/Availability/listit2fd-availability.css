@@ -1,82 +1,89 @@
-.jsavailability {
+.jsavailability,
+.pagecontainer .jsavailability.pageinput,
+.jsavailability-legend {
 	position: relative;
+	padding: 0 10px;
 }
 .jsavailability .previous-button,
 .jsavailability .next-button {
 	position: absolute;
 	top: 0;
-	padding: 0 5px; 
-	font-size: 5em;
-	line-height: 0.4em;
+	line-height: 22px;
+	font-family: Tahoma, sans-serif;
+	font-size: 45px;
 	color: #666;
 	cursor: pointer;
 }
 .jsavailability .previous-button {
-	left: -5px;
+	left: 0;
 }
 .jsavailability .next-button {
-	right: -5px;
+	right: 0;
 }
 .calendar-month {
 	display: inline-block;
 	width: 30.3%;
 	margin: 0 1.3%;
 }
-.clndr {
+.jsavailability .clndr {
 	text-align: center;
 }
-.clndr .controls {
+.jsavailability .controls {
 	font-size: 1.166em;
 }
-.clndr .controls .month {
+.jsavailability .controls .month {
 	display: block;
 	padding: 5px 0;
 	text-align: center;
 	letter-spacing: 1px;
 }
-.clndr .days {
+.jsavailability .days {
 	display: table;
 	width: 100%;
 	border-collapse: collapse;
 }
-.clndr .headers {
+.jsavailability .headers {
 	display: table-row;
 	border: 1px solid #dcdde0;
 }
-.clndr .row {
+.jsavailability .row {
 	display: table-row;
 }
-.clndr .day-header,
-.clndr .day,
-.clndr .empty {
+.jsavailability .day-header,
+.jsavailability .day,
+.jsavailability .empty {
 	display: table-cell;
 	width: 14.285%;
 	padding: 5px 0;
 }
-.clndr .day,
-.clndr .empty {
+.jsavailability .day,
+.jsavailability .empty,
+.jsavailability-legend .day,
+.jsavailability-legend .empty {
 	border: 1px solid #dcdde0;
 	font-weight: bold;
 }
-.clndr .day {
+.jsavailability .day,
+.jsavailability-legend .day {
 	background-color: #ddf9cf;
 	background-position: center center;
 	background-repeat: no-repeat;
 	color: #436F00;
 	overflow: hidden;
 }
-.pageinput .clndr .day {
+.pageinput .jsavailability .day {
 	cursor: pointer;
 }
-.clndr .day.event,
-.clndr .day.event-start.event-end {
+.jsavailability .day.event,
+.jsavailability .day.event-start.event-end,
+.jsavailability-legend .day.event {
 	background-color: #edeff4;
 	color: #212121;
 }
-.clndr .day.event-start.event-end {
+.jsavailability .day.event-start.event-end {
 	background-image: url(images/icon-car.png);
 }
-.clndr .day.event-start {
+.jsavailability .day.event-start {
 	text-indent: -999px;
 	background-image: url(images/icon-car.png), -moz-linear-gradient(left, #ddf9cf 0%, #ddf9cf 50%, #edeff4 50%, #edeff4 100%);
 	background-image: url(images/icon-car.png), -webkit-gradient(linear, left top, right top, color-stop(0%,#ddf9cf), color-stop(50%,#ddf9cf), color-stop(50%,#edeff4), color-stop(100%,#edeff4));
@@ -85,7 +92,7 @@
 	background-image: url(images/icon-car.png), -ms-linear-gradient(left, #ddf9cf 0%, #ddf9cf 50%, #edeff4 50%, #edeff4 100%);
 	background-image: url(images/icon-car.png), linear-gradient(to right, #ddf9cf 0%, #ddf9cf 50%, #edeff4 50%, #edeff4 100%);
 }
-.clndr .day.event-end {
+.jsavailability .day.event-end {
 	text-indent: -999px;
 	background-image: url(images/icon-car.png), -moz-linear-gradient(left, #edeff4 0%, #edeff4 50%, #ddf9cf 50%, #ddf9cf 100%);
 	background-image: url(images/icon-car.png), -webkit-gradient(linear, left top, right top, color-stop(0%,#edeff4), color-stop(50%,#edeff4), color-stop(50%,#ddf9cf), color-stop(100%,#ddf9cf));
@@ -93,4 +100,28 @@
 	background-image: url(images/icon-car.png), -o-linear-gradient(left, #edeff4 0%, #edeff4 50%, #ddf9cf 50%, #ddf9cf 100%);
 	background-image: url(images/icon-car.png), -ms-linear-gradient(left, #edeff4 0%, #edeff4 50%, #ddf9cf 50%, #ddf9cf 100%);
 	background-image: url(images/icon-car.png), linear-gradient(to right, #edeff4 0%, #edeff4 50%, #ddf9cf 50%, #ddf9cf 100%);
+}
+.jsavailability-legend {
+	margin: 15px 1.3%;
+	*zoom: 1;
+}
+.jsavailability-legend:before,
+.jsavailability-legend:after {
+	content: " ";
+	display: table;
+}
+.jsavailability-legend:after {
+	clear: both;
+}
+.jsavailability-legend .day,
+.jsavailability-legend span {
+	float: left;
+	display: block;
+	padding: 5px;
+}
+.jsavailability-legend .day {
+	margin: 0 5px 0 0;
+}
+.jsavailability-legend span {
+	margin: 0 15px 0 0;
 }
