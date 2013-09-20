@@ -71,7 +71,7 @@
 	color: #436F00;
 	overflow: hidden;
 }
-.pageinput .jsavailability .day {
+.pageinput.jsavailability .day {
 	cursor: pointer;
 }
 .jsavailability .day.event,
