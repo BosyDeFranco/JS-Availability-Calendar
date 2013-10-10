@@ -1,5 +1,6 @@
 <div class="pageoverflow">
 	<p class="pagetext">{$fielddef->GetName()}{if $fielddef->IsRequired()}*{/if}:</p>
+	<input type="hidden" name="{$actionid}customfield[{$fielddef->GetId()}]" value="" />
 	<div id="jsavailability-{$fielddef->GetId()}" class="pageinput jsavailability">
 		<div class="previous-button">&lsaquo;</div>
 		<div class="calendar-month"></div>
