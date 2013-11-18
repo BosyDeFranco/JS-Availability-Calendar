@@ -21,10 +21,10 @@
 					<% _.each(days, function(day, n) { %>
 					<%
 						var extraClasses = '';
-						if((day.events.length > 0 && day.events[0].isStart) || (day.events[1] !== undefined && day.events[1].isStart)) {
+						if((day.events.length > 0 && day.events[0].start == day.date.format('YYYY-MM-DD')) || (day.events[1] !== undefined && day.events[1].start == day.date.format('YYYY-MM-DD'))) {
 							extraClasses += ' event-start';
 						}
-						if((day.events.length > 0 && day.events[0].isEnd) || (day.events[1] !== undefined && day.events[1].isEnd)) {
+						if((day.events.length > 0 && day.events[0].end == day.date.format('YYYY-MM-DD')) || (day.events[1] !== undefined && day.events[1].end == day.date.format('YYYY-MM-DD'))) {
 							extraClasses += ' event-end';
 						}
 					%>

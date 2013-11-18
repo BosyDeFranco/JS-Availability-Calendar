@@ -9,3 +9,4 @@ java -jar ~/bin/compiler.jar \
 	--create_source_map listit2fd-availability.js.map \
 	--source_map_format=V3 \
 	--js_output_file listit2fd-availability.js
+echo '//# sourceMappingURL=listit2fd-availability.js.map' >> listit2fd-availability.js
