@@ -28,6 +28,7 @@
 
 if (!is_object(cmsms())) exit;
 
+// 0.10.1 -> 0.10.2 upgrade
 if( version_compare($oldversion, '0.10.2') < 0 )
 {
 	foreach(cmsms()->GetModuleInstance('ListIt2')->ListModules() as $li)
@@ -87,4 +88,9 @@ if( version_compare($oldversion, '0.10.2') < 0 )
 			}
 		}
 	}
-} // end of 0.10.1 -> 0.10.2 upgrade*/
+}
+// 0.10.2 -> 0.10.3 upgrade
+if( version_compare($oldversion, '0.10.3') < 0 )
+{
+	// select all starts and ends - make array at of it - truncate database - insert events
+}

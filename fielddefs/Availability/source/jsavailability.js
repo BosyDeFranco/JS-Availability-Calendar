@@ -36,11 +36,12 @@ var JSAvailability = (function ($) {
 			 newEvent = target;
 			$(newEvent.element).addClass('event-start');
 		},
+		// TODO: check overlap
 		eventEnd = function (target) {
 			var date = newEvent.date.clone(),
 				existing = null,
 				existingIndex = null;
-			if(target.date - newEvent.date <= 0 || (target.events.length > 0 && target.events[0].isStart === false)) {
+			if(target.date - newEvent.date <= 0 || (target.events.length > 0 && target.events[0].start !== target.date.format('YYYY-MM-DD'))) {
 				$(newEvent.element).removeClass('event-start');
 				newEvent = null;
 				return false;
@@ -114,6 +115,11 @@ var JSAvailability = (function ($) {
 						template: $('#jsavailability-'+id+'-template').html(),
 						weekOffset: 1,
 						startWithMonth: moment().add('month', index),
+						showAdjacentMonths: false,
+						multiDayEvents: {
+							startDate: 'start',
+							endDate: 'end'
+						},
 						events: events
 					});
 				calendars.push(calendar);
