@@ -1,5 +1,5 @@
 /*
- *               ~ CLNDR v1.1.0 ~
+ *               ~ CLNDR v1.2.0 ~
  * ==============================================
  *       https://github.com/kylestetz/CLNDR
  * ==============================================
@@ -81,7 +81,8 @@
     showAdjacentMonths: true,
     adjacentDaysChangeMonth: false,
     ready: null,
-    constraints: null
+    constraints: null,
+    forceSixRows: null
   };
 
   // The actual plugin constructor
@@ -209,21 +210,21 @@
       // if we're using multi-day events, the start or end must be in the current month
       if(this.options.multiDayEvents) {
         this.eventsThisMonth = $(this.options.events).filter( function() {
-          return this._clndrStartDateObject.format("YYYY-MM") == currentMonth.format("YYYY-MM")
-          || this._clndrEndDateObject.format("YYYY-MM") == currentMonth.format("YYYY-MM");
+          return this._clndrStartDateObject.format("YYYY-MM") <= currentMonth.format("YYYY-MM")
+          || currentMonth.format("YYYY-MM") <= this._clndrEndDateObject.format("YYYY-MM");
         }).toArray();
 
         if(this.options.showAdjacentMonths) {
           var lastMonth = currentMonth.clone().subtract('months', 1);
           var nextMonth = currentMonth.clone().add('months', 1);
           this.eventsLastMonth = $(this.options.events).filter( function() {
-            return this._clndrStartDateObject.format("YYYY-MM") == lastMonth.format("YYYY-MM")
-          || this._clndrEndDateObject.format("YYYY-MM") == lastMonth.format("YYYY-MM");
+            return this._clndrStartDateObject.format("YYYY-MM") <= lastMonth.format("YYYY-MM")
+          || lastMonth.format("YYYY-MM") <= this._clndrEndDateObject.format("YYYY-MM");
           }).toArray();
 
           this.eventsNextMonth = $(this.options.events).filter( function() {
-            return this._clndrStartDateObject.format("YYYY-MM") == nextMonth.format("YYYY-MM")
-          || this._clndrEndDateObject.format("YYYY-MM") == nextMonth.format("YYYY-MM");
+            return this._clndrStartDateObject.format("YYYY-MM") <= nextMonth.format("YYYY-MM")
+          || nextMonth.format("YYYY-MM") <= this._clndrEndDateObject.format("YYYY-MM");
           }).toArray();
         }
       }
@@ -276,18 +277,28 @@
 
     // ...and if there are any trailing blank boxes, fill those in
     // with the next month first days
-    if(this.options.showAdjacentMonths) {
-      i = 1;
-      while(daysArray.length % 7 !== 0) {
+    var i = 1;
+    while(daysArray.length % 7 !== 0) {
+      if(this.options.showAdjacentMonths) {
         var day = moment([currentMonth.year(), currentMonth.month(), numOfDays + i]);
         daysArray.push( this.createDayObject(day, this.eventsNextMonth) );
-        i++;
-      }
-    } else {
-      i = 1;
-      while(daysArray.length % 7 !== 0) {
+      } else {
         daysArray.push( this.calendarDay({ classes: this.options.targets.empty + " next-month" }) );
-        i++;
+      }
+      i++;
+    }
+
+    // if we want to force six rows of calendar, now's our last chance to add another row.
+    // if the 42 seems explicit it's because we're creating a 7-row grid and 6 rows of 7 is always 42!
+    if(this.options.forceSixRows && daysArray.length !== 42 ) {
+      var start = moment(daysArray[daysArray.length - 1].date).add('days', 1);
+      while(daysArray.length < 42) {
+        if(this.options.showAdjacentMonths) {
+          daysArray.push( this.createDayObject(moment(start), this.eventsNextMonth) );
+          start.add('days', 1);
+        } else {
+          daysArray.push( this.calendarDay({ classes: this.options.targets.empty + " next-month" }) );
+        }
       }
     }
 
@@ -365,6 +376,9 @@
     // using multiple calendars on a page we are technically violating the
     // uniqueness of IDs.
     extraClasses += " calendar-day-" + day.format("YYYY-MM-DD");
+
+    // day of week
+    extraClasses += " calendar-dow-" + day.weekday();
 
     return this.calendarDay({
       day: day.date(),
@@ -823,10 +837,14 @@
   }
 
   $.fn.clndr = function(options) {
-    if( !$.data( this, 'plugin_clndr') ) {
-      var clndr_instance = new Clndr(this, options);
-      $.data(this, 'plugin_clndr', clndr_instance);
-      return clndr_instance;
+    if(this.length === 1) {
+      if(!this.data('plugin_clndr')) {
+        var clndr_instance = new Clndr(this, options);
+        this.data('plugin_clndr', clndr_instance);
+        return clndr_instance;
+      }
+    } else if(this.length > 1) {
+      throw new Error("CLNDR does not support multiple elements yet. Make sure your clndr selector returns only one element.");
     }
   }
 

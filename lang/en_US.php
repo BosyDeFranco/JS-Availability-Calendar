@@ -5,6 +5,20 @@ $lang['occupancies'] = '%u days occupied';
 $lang['available'] = 'Available';
 $lang['unavailable'] = 'Unavailable';
 
+$lang['mode'] = 'Mode';
+$lang['daily'] = 'Day mode';
+$lang['hourly'] = 'Hour mode';
+$lang['help_mode'] = 'Allows to set availability slots to either days or hours';
+
+$lang['force_interval'] = 'Force interval';
+$lang['help_force_interval'] = 'Set fixed intervals so availability slots can only fill a multiple of these.';
+
+$lang['block_slots'] = 'Block slots';
+$lang['off'] = 'Off';
+$lang['recurrent'] = 'Recurrent';
+$lang['once'] = 'Once only';
+$lang['help_block_slots'] = 'Enables to show certain slots as blocked. These can optionally be recurrent each week (in day mode) or each month (in hour mode)';
+
 $lang['general'] = 'General';
 $lang['about'] = 'About';
 $lang['team'] = 'Team';
